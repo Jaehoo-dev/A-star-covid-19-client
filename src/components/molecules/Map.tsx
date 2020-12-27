@@ -1,15 +1,6 @@
 import styled from 'styled-components';
 import Cell from '../atoms/Cell';
 
-const Grid = styled.div`
-  height: 60vmin;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(30, 1fr);
-  grid-template-rows: repeat(30, 1fr);
-  border: 1px solid black;
-`;
-
 interface MapProps {
   numberOfRows: number;
   numberOfColumns: number;
@@ -37,5 +28,14 @@ const Map = ({
     </Grid>
   );
 };
+
+const Grid = styled.div`
+  height: 60vmin;
+  min-height: 480px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(40, 1fr);
+  grid-template-rows: repeat(30, 1fr);
+`;
 
 export default Map;

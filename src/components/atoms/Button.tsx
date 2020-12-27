@@ -9,7 +9,7 @@ interface ButtonProps {
 const Button = ({
   onClick,
   children,
-  theme,
+  theme = baseTheme,
 }: ButtonProps) => {
   function clickHandler() {
     onClick();
@@ -61,6 +61,15 @@ export const baseTheme = {
   backgroundColor: 'white',
   padding: '7px 10px',
   fontSize: '16px',
+};
+
+export const specialTheme = {
+  border: '1px solid',
+  borderRadius: '5px',
+  backgroundColor: '#FFA620',
+  padding: '7px 10px',
+  fontSize: '18px',
+  fontWeight: 'bold',
 };
 
 export const textTheme = {

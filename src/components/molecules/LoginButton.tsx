@@ -1,4 +1,4 @@
-import Button, { baseTheme } from '../atoms/Button';
+import Button from '../atoms/Button';
 
 const LoginButton = () => {
   function clickHandler() {
@@ -6,10 +6,7 @@ const LoginButton = () => {
   }
 
   return (
-    <Button
-      onClick={clickHandler}
-      theme={baseTheme}
-    >
+    <Button onClick={clickHandler}>
       <img
         className='icon'
         src='/images/github.png'

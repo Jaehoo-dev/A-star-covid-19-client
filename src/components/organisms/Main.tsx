@@ -2,25 +2,33 @@ import styled from 'styled-components';
 import MapHeader from '../molecules/MapHeader';
 import Map from '../molecules/Map';
 
-const Wrapper = styled.div`
-  width: 60vmin;
-  max-width: 960px;
+const Main = () => {
+  return (
+    <MainWrapper>
+      <MapWrapper>
+        <MapHeader />
+        <Map
+          numberOfRows={30}
+          numberOfColumns={40}
+        />
+      </MapWrapper>
+      * Drag and drop to move nodes.<br />
+      * Click and drag to set walls.
+    </MainWrapper>
+  );
+};
+
+const MainWrapper = styled.div`
+  width: 90vmin;
+  min-width: 420px;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -47%);
 `;
 
-const Main = () => {
-  return (
-    <Wrapper>
-      <MapHeader />
-      <Map
-        numberOfRows={30}
-        numberOfColumns={30}
-      />
-    </Wrapper>
-  );
-};
+const MapWrapper = styled.div`
+  border: 1px solid black;
+`;
 
 export default Main;
