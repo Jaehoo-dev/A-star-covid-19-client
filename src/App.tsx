@@ -1,8 +1,9 @@
-function App() {
+import MainPage from './components/pages/MainPage';
+
+const App = () => {
   return (
-    <div className="App">
-    </div>
+    <MainPage />
   );
-}
+};
 
 export default App;
