@@ -1,18 +1,47 @@
 import styled from 'styled-components';
 import Button, { specialTheme } from '../atoms/Button';
 
-const MapHeader: React.FC = () => {
+interface MapHeaderProps {
+  onDangerButtonClick: () => void;
+  onRandomButtonClick: () => void;
+  onFindPathClick: () => void;
+  onClearButtonClick: () => void;
+}
+
+const MapHeader = ({
+  onDangerButtonClick,
+  onRandomButtonClick,
+  onFindPathClick,
+  onClearButtonClick,
+}: MapHeaderProps) => {
   function historyClickHandler() {
 
+  }
+
+  function dangerButtonClickHandler() {
+    onDangerButtonClick();
+  }
+
+  function randomButtonClickHandler() {
+    onRandomButtonClick();
+  }
+
+  function findPathClickHandler() {
+    onFindPathClick();
+  }
+
+  function clearButtonClickHandler() {
+    onClearButtonClick();
   }
 
   return (
     <Header>
       <Button onClick={historyClickHandler}>History</Button>
-      <Button onClick={historyClickHandler}>Stopover</Button>
-      <Button onClick={historyClickHandler}>Clear</Button>
+      <Button onClick={dangerButtonClickHandler}>Danger</Button>
+      <Button onClick={randomButtonClickHandler}>Random</Button>
+      <Button onClick={clearButtonClickHandler}>Clear</Button>
       <Button
-        onClick={historyClickHandler}
+        onClick={findPathClickHandler}
         theme={specialTheme}
       >Find Path</Button>
     </Header>

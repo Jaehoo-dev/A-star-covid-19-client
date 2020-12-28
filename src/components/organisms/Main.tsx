@@ -2,25 +2,39 @@ import styled from 'styled-components';
 import MapHeader from '../molecules/MapHeader';
 import Map from '../molecules/Map';
 
-const Main = () => {
+interface MainProps {
+  cells: JSX.Element[],
+  onDangerButtonClick: () => void;
+  onRandomButtonClick: () => void;
+  onFindPathClick: () => void;
+  onClearButtonClick: () => void;
+}
+
+const Main = ({
+  cells,
+  onDangerButtonClick,
+  onRandomButtonClick,
+  onFindPathClick,
+  onClearButtonClick,
+}: MainProps) => {
   return (
     <MainWrapper>
       <MapWrapper>
-        <MapHeader />
-        <Map
-          numberOfRows={30}
-          numberOfColumns={40}
+        <MapHeader
+          onDangerButtonClick={onDangerButtonClick}
+          onRandomButtonClick={onRandomButtonClick}
+          onFindPathClick={onFindPathClick}
+          onClearButtonClick={onClearButtonClick}
         />
+        <Map cells={cells} />
       </MapWrapper>
-      * Drag and drop to move nodes.<br />
-      * Click and drag to set walls.
+      * Click on cell to set destinantion.
     </MainWrapper>
   );
 };
 
 const MainWrapper = styled.div`
-  width: 90vmin;
-  min-width: 420px;
+  width: 900px;
   position: absolute;
   top: 50%;
   left: 50%;

@@ -26,22 +26,22 @@ const Button = ({
 
 const StyledButton = styled.button`
   text-decoration: none;
-  background-color: ${props => props.theme.backgroundColor};
-  padding: ${props => props.theme.padding};
-  border: ${props => props.theme.border};
+  background-color: ${({ theme }) => theme.backgroundColor};
+  padding: ${({ theme }) => theme.padding};
+  border: ${({ theme }) => theme.border};
   display: flex;
   align-items: center;
-  border-radius: ${props => props.theme.borderRadius};
-  font-size: ${props => props.theme.fontSize};
-  font-weight: ${props => props.theme.fontWeight};
-  color: ${props => props.theme.color};
-  width: ${props => props.theme.width};
-  height: ${props => props.theme.height};
-  margin: ${props => props.theme.margin};
-  position: ${props => props.theme.position};
-  top: ${props => props.theme.top};
-  left: ${props => props.theme.left};
-  transform: ${props => props.theme.transform};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  font-size: ${({ theme }) => theme.fontSize};
+  font-weight: ${({ theme }) => theme.fontWeight};
+  color: ${({ theme }) => theme.color};
+  width: ${({ theme }) => theme.width};
+  height: ${({ theme }) => theme.height};
+  margin: ${({ theme }) => theme.margin};
+  position: ${({ theme }) => theme.position};
+  top: ${({ theme }) => theme.top};
+  left: ${({ theme }) => theme.left};
+  transform: ${({ theme }) => theme.transform};
 
   &:hover {
     cursor: pointer;

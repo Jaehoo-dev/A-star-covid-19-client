@@ -1,27 +1,11 @@
 import styled from 'styled-components';
-import Cell from '../atoms/Cell';
+import { NUMBER_OF_ROWS, NUMBER_OF_COLUMNS } from '../../constants/numbers';
 
 interface MapProps {
-  numberOfRows: number;
-  numberOfColumns: number;
+  cells: JSX.Element[];
 }
 
-const Map = ({
-  numberOfRows,
-  numberOfColumns,
-}: MapProps) => {
-  const cells = [];
-
-  for (let i = 0; i < numberOfRows; i++) {
-    const row = [];
-
-    for (let j = 0; j < numberOfColumns; j++) {
-      row.push(<Cell key={j} />);
-    }
-
-    cells.push(row);
-  }
-
+const Map = ({ cells }: MapProps) => {
   return (
     <Grid>
       {cells}
@@ -30,12 +14,13 @@ const Map = ({
 };
 
 const Grid = styled.div`
-  height: 60vmin;
-  min-height: 480px;
+  height: 580px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(40, 1fr);
-  grid-template-rows: repeat(30, 1fr);
+  grid-template-rows: repeat(${NUMBER_OF_ROWS}, 1fr);
+  grid-template-columns: repeat(${NUMBER_OF_COLUMNS}, 1fr);
+  grid-gap: 3px;
+  padding: 3px;
 `;
 
 export default Map;
