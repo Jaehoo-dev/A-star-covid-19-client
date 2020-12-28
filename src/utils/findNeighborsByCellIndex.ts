@@ -1,5 +1,4 @@
 import Cell from '../classes/Cell';
-import Map from '../classes/Map';
 import { calculateCellIndex } from './calculateIndex';
 import filterCoordinatesByBoundary from './filterCoordinatesByBoundary';
 
