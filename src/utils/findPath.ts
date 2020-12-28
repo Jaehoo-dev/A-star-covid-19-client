@@ -1,7 +1,12 @@
 import Map from '../classes/Map';
+import Cell from '../classes/Cell';
 import calculateManhattanDistance from './calculateManhattanDistance';
+import findCellWithMinFCost from './findCellWithMinFCost';
+import findNeighborsByCellIndex from './findNeighborsByCellIndex';
+import visualizePathFinding from './visualizePathFinding';
+import visualizeResultPath from './visualizeResultPath';
 
-export default function findPath(
+export default async function findPath(
   numberOfRows: number,
   numberOfColumns: number,
   startingPointIndex: number,
@@ -18,14 +23,63 @@ export default function findPath(
 
   startingPoint.gCost = 0;
   startingPoint.hCost = calculateManhattanDistance(startingPoint, destination);
-  startingPoint.state = 'startingPoint';
-
-  destination.state = 'destination';
+  startingPoint.fCost = startingPoint.gCost + startingPoint.hCost;
 
   for (let i = 0; i < dangerZone.length; i++) {
-    map.getCell(dangerZone[i]).state = 'danger';
+    map.getCell(dangerZone[i]).isDangerous = true;
   }
 
   const openCells = [startingPoint];
-  const closedCells = [];
+  const closedCells: Cell[] = [];
+  let currentCell = startingPoint;
+
+  while (openCells.length) {
+    currentCell = findCellWithMinFCost(openCells);
+
+    openCells.splice(openCells.indexOf(currentCell), 1);
+    closedCells.push(currentCell);
+
+    await visualizePathFinding(openCells, closedCells, setOpenIndices, setClosedIndices);
+
+    if (currentCell.index === destinationIndex) {
+      break;
+    }
+
+    const neighbors
+      = findNeighborsByCellIndex(currentCell, numberOfRows, numberOfColumns)
+        .map(cellIndex => map.getCell(cellIndex));
+
+    neighbors.forEach(async neighbor => {
+      if (
+        (isShowingDangerZone && neighbor.isDangerous)
+        || closedCells.includes(neighbor)
+      ) {
+        return;
+      }
+
+      if (currentCell.gCost + 1 < neighbor.gCost) {
+        neighbor.gCost = currentCell.gCost + 1;
+        neighbor.hCost = calculateManhattanDistance(neighbor, destination);
+        neighbor.fCost = neighbor.gCost + neighbor.hCost;
+        neighbor.cameFrom = currentCell;
+      }
+
+      if (!openCells.includes(neighbor)) {
+        openCells.push(neighbor);
+
+        await visualizePathFinding(openCells, closedCells, setOpenIndices, setClosedIndices);
+      }
+    });
+  }
+
+  const path = [];
+  let currentBackTrackingCell = currentCell;
+
+  while (currentBackTrackingCell.cameFrom) {
+    path.push(currentBackTrackingCell);
+
+    currentBackTrackingCell = currentBackTrackingCell.cameFrom;
+  }
+
+  visualizeResultPath(path.reverse(), setPathIndices);
 }

@@ -42,11 +42,11 @@ const StyledCell = styled.div<{
       case 'unvisited':
         return 'white';
       case 'open':
-        return 'green';
+        return '#0d0f8a';
       case 'closed':
-        return 'blue';
+        return '#e3e3e3';
       case 'path':
-        return '#FFA620';
+        return '#f9fd00';
       case 'danger':
         return 'red';
       default:

@@ -66,7 +66,7 @@ export const baseTheme = {
 export const specialTheme = {
   border: '1px solid',
   borderRadius: '5px',
-  backgroundColor: '#FFA620',
+  backgroundColor: '#f9fd00',
   padding: '7px 10px',
   fontSize: '18px',
   fontWeight: 'bold',

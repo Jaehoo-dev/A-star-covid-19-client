@@ -1,4 +1,5 @@
-import { calculateRowIndex, calculateColumnIndex } from './calculateIndex';
+import { calculateRowIndex, calculateColumnIndex, calculateCellIndex } from './calculateIndex';
+import filterCoordinatesByBoundary from './filterCoordinatesByBoundary';
 
 export default function createDangerZone(
   centerIndex: number,
@@ -15,12 +16,7 @@ export default function createDangerZone(
     }
   }
 
-  dangerZone = dangerZone.filter(coordinate => (
-    coordinate[0] > -1
-    && coordinate[0] < numberOfRows
-    && coordinate[1] > -1
-    && coordinate[1] < numberOfColumns
-  ));
+  dangerZone = filterCoordinatesByBoundary(dangerZone, numberOfRows, numberOfColumns);
 
-  return dangerZone.map(coordinate => coordinate[0] * numberOfColumns + coordinate[1]);
+  return dangerZone.map(coordinates => calculateCellIndex(coordinates, numberOfColumns));
 }

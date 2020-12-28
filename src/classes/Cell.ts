@@ -6,11 +6,12 @@ export default class Cell {
   columnIndex: number;
   gCost: number;
   hCost: number;
-  state: 'unvisited' | 'open' | 'closed' | 'path' | 'startingPoint' | 'destination' | 'danger';
+  fCost: number;
+  isDangerous: boolean;
+  cameFrom: Cell | null;
 
   constructor(
     index: number,
-    numberOfRows: number,
     numberOfColumns: number,
   ) {
     this.index = index;
@@ -18,6 +19,8 @@ export default class Cell {
     this.columnIndex = calculateColumnIndex(index, numberOfColumns);
     this.gCost = Infinity;
     this.hCost = Infinity;
-    this.state = 'unvisited';
+    this.fCost = Infinity;
+    this.isDangerous = false;
+    this.cameFrom = null;
   }
 }

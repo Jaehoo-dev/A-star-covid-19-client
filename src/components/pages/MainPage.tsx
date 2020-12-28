@@ -50,7 +50,7 @@ const MainPage = () => {
     const target = event.target as HTMLDivElement;
 
     const cellId = Number(target.id);
-    console.log(cellId);
+
     if (dangerZone.includes(cellId)) {
       alert('Cannot select danger zone as destination.');
 
