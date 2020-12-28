@@ -1,11 +1,13 @@
+import { calculateRowIndex, calculateColumnIndex } from './calculateIndex';
+
 export default function createDangerZone(
   centerIndex: number,
   numberOfRows: number,
   numberOfColumns: number,
 ) {
   let dangerZone = [];
-  const centerRow = Math.floor(centerIndex / numberOfColumns);
-  const centerColumn = centerIndex % numberOfColumns;
+  const centerRow = calculateRowIndex(centerIndex, numberOfColumns);
+  const centerColumn = calculateColumnIndex(centerIndex, numberOfColumns);
 
   for (let i = -2; i < 3; i++) {
     for (let j = -2; j < 3; j++) {

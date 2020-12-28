@@ -10,7 +10,7 @@ const HomeButton = () => {
       onClick={clickHandler}
       theme={textTheme}
     >
-      A* Map
+      A* COVID-19
     </Button>
   );
 };

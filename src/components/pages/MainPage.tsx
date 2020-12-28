@@ -15,7 +15,6 @@ const MainPage = () => {
       NUMBER_OF_ROWS,
       NUMBER_OF_COLUMNS,
     ));
-  const [isShowingDangerZone, setIsShowingDangerZone] = useState(true);
   const [startingPointIndex, setStartingPointIndex]
     = useState(getRandomCell(totalNumberOfCells, dangerZone));
   const [destinationIndex, setDestinationIndex] = useState(-1);
@@ -23,12 +22,35 @@ const MainPage = () => {
   const [closedIndices, setClosedIndices] = useState<number[]>([]);
   const [pathIndices, setPathIndices] = useState<number[]>([]);
   const [cells, setCells] = useState<JSX.Element[]>([]);
+  const [isShowingDangerZone, setIsShowingDangerZone] = useState(true);
+
+  function findPathClickHandler() {
+    if (destinationIndex === -1) {
+      alert('Select destination.');
+
+      return;
+    }
+
+    clearClickHandler();
+
+    findPath(
+      NUMBER_OF_ROWS,
+      NUMBER_OF_COLUMNS,
+      startingPointIndex,
+      destinationIndex,
+      dangerZone,
+      setOpenIndices,
+      setClosedIndices,
+      setPathIndices,
+      isShowingDangerZone,
+    );
+  }
 
   function cellClickHandler(event: React.MouseEvent) {
     const target = event.target as HTMLDivElement;
 
     const cellId = Number(target.id);
-
+    console.log(cellId);
     if (dangerZone.includes(cellId)) {
       alert('Cannot select danger zone as destination.');
 
@@ -44,17 +66,6 @@ const MainPage = () => {
     setDestinationIndex(cellId);
   }
 
-  function findPathClickHandler() {
-    if (destinationIndex === -1) {
-      alert('Select destination.');
-
-      return;
-    }
-
-    clearClickHandler();
-    findPath();
-  }
-
   useEffect(() => {
     setCells(Array.from({
       length: totalNumberOfCells,
@@ -68,7 +79,15 @@ const MainPage = () => {
         onClick={(event: React.MouseEvent) => cellClickHandler(event)}
       />
     )));
-  }, [startingPointIndex, destinationIndex, dangerZone, isShowingDangerZone, openIndices]);
+  }, [
+    startingPointIndex,
+    destinationIndex,
+    dangerZone,
+    isShowingDangerZone,
+    openIndices,
+    closedIndices,
+    pathIndices,
+  ]);
 
   function setCellState(index: number) {
     if (index === startingPointIndex) {
@@ -86,16 +105,16 @@ const MainPage = () => {
       return 'danger';
     }
 
+    if (pathIndices.includes(index)) {
+      return 'path';
+    }
+
     if (openIndices.includes(index)) {
       return 'open';
     }
 
     if (closedIndices.includes(index)) {
       return 'closed';
-    }
-
-    if (pathIndices.includes(index)) {
-      return 'path';
     }
 
     return 'unvisited';
