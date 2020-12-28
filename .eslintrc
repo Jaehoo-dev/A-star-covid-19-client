@@ -1,0 +1,12 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": ["plugin:@typescript-eslint/eslint-recommended"],
+  "rules": {
+    "quotes": ["warn", "single"],
+    "eol-last": ["error", "always"],
+    "comma-dangle": ["warn", "always-multiline"],
+    "semi": ["error", "always"],
+    "no-unused-vars": ["warn", { "args": "none" }]
+  }
+}
