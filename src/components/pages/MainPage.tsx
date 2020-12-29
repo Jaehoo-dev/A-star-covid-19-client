@@ -36,27 +36,28 @@ const MainPage = (): JSX.Element => {
     setStartingPointIndex(getRandomCell(totalNumberOfCells, dangerZones));
   }, [dangerZones]);
 
-  function findPathClickHandler(): void {
-    if (destinationIndex === -1) {
-      alert('Select destination.');
-
-      return;
-    }
-
-    clearClickHandler();
-
-    findPath(
-      NUMBER_OF_ROWS,
-      NUMBER_OF_COLUMNS,
-      startingPointIndex,
-      destinationIndex,
-      dangerZones,
-      setOpenIndices,
-      setClosedIndices,
-      setPathIndices,
-      isShowingDangerZones,
-    );
-  }
+  useEffect(() => {
+    setCells(Array.from({
+      length: totalNumberOfCells,
+    }, (x, i) => (
+      <Cell
+        key={i}
+        state={setCellState(i)}
+        index={i}
+        numberOfRows={NUMBER_OF_ROWS}
+        numberOfColumns={NUMBER_OF_COLUMNS}
+        onClick={(event: React.MouseEvent) => cellClickHandler(event)}
+      />
+    )));
+  }, [
+    startingPointIndex,
+    destinationIndex,
+    dangerZones,
+    isShowingDangerZones,
+    openIndices,
+    closedIndices,
+    pathIndices,
+  ]);
 
   function cellClickHandler(event: React.MouseEvent): void {
     const target = event.target as HTMLDivElement;
@@ -80,28 +81,43 @@ const MainPage = (): JSX.Element => {
     setDestinationIndex(cellId);
   }
 
-  useEffect(() => {
-    setCells(Array.from({
-      length: totalNumberOfCells,
-    }, (x, i) => (
-      <Cell
-        key={i}
-        state={setCellState(i)}
-        index={i}
-        numberOfRows={NUMBER_OF_ROWS}
-        numberOfColumns={NUMBER_OF_COLUMNS}
-        onClick={(event: React.MouseEvent) => cellClickHandler(event)}
-      />
-    )));
-  }, [
-    startingPointIndex,
-    destinationIndex,
-    dangerZones,
-    isShowingDangerZones,
-    openIndices,
-    closedIndices,
-    pathIndices,
-  ]);
+  function dangerClickHandler(): void {
+    setIsShowingDangerZones(!isShowingDangerZones);
+  }
+
+  function randomClickHandler(): void {
+    loadDangerLocations();
+    setDestinationIndex(-1);
+    clearClickHandler();
+  }
+
+  function clearClickHandler(): void {
+    setOpenIndices([]);
+    setClosedIndices([]);
+    setPathIndices([]);
+  }
+
+  function findPathClickHandler(): void {
+    if (destinationIndex === -1) {
+      alert('Select destination.');
+
+      return;
+    }
+
+    clearClickHandler();
+
+    findPath(
+      NUMBER_OF_ROWS,
+      NUMBER_OF_COLUMNS,
+      startingPointIndex,
+      destinationIndex,
+      dangerZones,
+      setOpenIndices,
+      setClosedIndices,
+      setPathIndices,
+      isShowingDangerZones,
+    );
+  }
 
   function setCellState(index: number): CellProps['state'] {
     if (index === startingPointIndex) {
@@ -132,22 +148,6 @@ const MainPage = (): JSX.Element => {
     }
 
     return 'unvisited';
-  }
-
-  function randomClickHandler(): void {
-    loadDangerLocations();
-    setDestinationIndex(-1);
-    clearClickHandler();
-  }
-
-  function dangerClickHandler(): void {
-    setIsShowingDangerZones(!isShowingDangerZones);
-  }
-
-  function clearClickHandler(): void {
-    setOpenIndices([]);
-    setClosedIndices([]);
-    setPathIndices([]);
   }
 
   async function loadDangerLocations(): Promise<void> {

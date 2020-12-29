@@ -32,6 +32,7 @@ export default async function findPath(
   const openCells = [startingPoint];
   const closedCells: Cell[] = [];
   let currentCell = startingPoint;
+  let hasFoundPath = false;
 
   while (openCells.length) {
     currentCell = findCellWithMinFCost(openCells);
@@ -42,6 +43,8 @@ export default async function findPath(
     await visualizePathFinding(openCells, closedCells, setOpenIndices, setClosedIndices);
 
     if (currentCell.index === destinationIndex) {
+      hasFoundPath = true;
+
       break;
     }
 
@@ -70,6 +73,12 @@ export default async function findPath(
         await visualizePathFinding(openCells, closedCells, setOpenIndices, setClosedIndices);
       }
     });
+  }
+
+  if (!hasFoundPath) {
+    alert('No path found');
+
+    return;
   }
 
   const path = [];
