@@ -10,7 +10,7 @@ const Button = ({
   onClick,
   children,
   theme = baseTheme,
-}: ButtonProps) => {
+}: ButtonProps): JSX.Element => {
   function clickHandler() {
     onClick();
   }

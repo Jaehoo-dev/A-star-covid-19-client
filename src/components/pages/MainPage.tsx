@@ -7,7 +7,7 @@ import getRandomCell from '../../utils/getRandomCell';
 import createDangerZone from '../../utils/createDangerZone';
 import findPath from '../../utils/findPath';
 
-const MainPage = () => {
+const MainPage = (): JSX.Element => {
   const totalNumberOfCells = NUMBER_OF_ROWS * NUMBER_OF_COLUMNS;
   const [dangerZone, setdangerZone]
     = useState<number[]>(createDangerZone(
@@ -56,6 +56,8 @@ const MainPage = () => {
 
       return;
     }
+
+    clearClickHandler();
 
     if (cellId === destinationIndex) {
       setDestinationIndex(-1);

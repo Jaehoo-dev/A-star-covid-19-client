@@ -13,7 +13,7 @@ const MapHeader = ({
   onRandomButtonClick,
   onFindPathClick,
   onClearButtonClick,
-}: MapHeaderProps) => {
+}: MapHeaderProps): JSX.Element => {
   function historyClickHandler() {
 
   }

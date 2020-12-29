@@ -1,6 +1,6 @@
 import Button from '../atoms/Button';
 
-const LoginButton = () => {
+const LoginButton = (): JSX.Element => {
   function clickHandler() {
 
   }

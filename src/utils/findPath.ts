@@ -16,7 +16,7 @@ export default async function findPath(
   setClosedIndices: React.Dispatch<React.SetStateAction<number[]>>,
   setPathIndices: React.Dispatch<React.SetStateAction<number[]>>,
   isShowingDangerZone: boolean,
-) {
+): Promise<void> {
   const map = new Map(numberOfRows, numberOfColumns);
   const startingPoint = map.getCell(startingPointIndex);
   const destination = map.getCell(destinationIndex);

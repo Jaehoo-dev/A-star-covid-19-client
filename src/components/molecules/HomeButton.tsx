@@ -1,6 +1,6 @@
 import Button, { textTheme } from '../atoms/Button';
 
-const HomeButton = () => {
+const HomeButton = (): JSX.Element => {
   function clickHandler() {
     window.location.reload();
   }

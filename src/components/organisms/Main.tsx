@@ -16,7 +16,7 @@ const Main = ({
   onRandomButtonClick,
   onFindPathClick,
   onClearButtonClick,
-}: MainProps) => {
+}: MainProps): JSX.Element => {
   return (
     <MainWrapper>
       <MapWrapper>

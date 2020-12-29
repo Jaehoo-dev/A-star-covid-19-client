@@ -13,10 +13,8 @@ interface CellProps {
 const Cell = ({
   state,
   index,
-  numberOfRows,
-  numberOfColumns,
   onClick,
-}: CellProps) => {
+}: CellProps): JSX.Element => {
   function clickHandler(event: React.MouseEvent) {
     onClick(event);
   }
