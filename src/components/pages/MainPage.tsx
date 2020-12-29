@@ -98,6 +98,14 @@ const MainPage = (): JSX.Element => {
   }
 
   function findPathClickHandler(): void {
+    activatePathFinding(false);
+  }
+
+  function visualizeClickHandler(): void {
+    activatePathFinding(true);
+  }
+
+  function activatePathFinding(isVisualizationEnabled: boolean): void {
     if (destinationIndex === -1) {
       alert('Select destination.');
 
@@ -116,6 +124,7 @@ const MainPage = (): JSX.Element => {
       setClosedIndices,
       setPathIndices,
       isShowingDangerZones,
+      isVisualizationEnabled,
     );
   }
 
@@ -165,8 +174,9 @@ const MainPage = (): JSX.Element => {
         cells={cells}
         onDangerButtonClick={dangerClickHandler}
         onRandomButtonClick={randomClickHandler}
-        onFindPathClick={findPathClickHandler}
         onClearButtonClick={clearClickHandler}
+        onFindPathClick={findPathClickHandler}
+        onVisualizeClick={visualizeClickHandler}
       />
     </>
   );
