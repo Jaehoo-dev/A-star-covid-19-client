@@ -2,21 +2,17 @@ import { useState, useEffect } from 'react';
 import { NUMBER_OF_ROWS, NUMBER_OF_COLUMNS } from '../../constants/numbers';
 import MainHeader from '../organisms/MainHeader';
 import Main from '../organisms/Main';
-import Cell from '../atoms/Cell';
+import Cell, { CellProps } from '../atoms/Cell';
 import getRandomCell from '../../utils/getRandomCell';
 import createDangerZone from '../../utils/createDangerZone';
 import findPath from '../../utils/findPath';
+import fetchDangerLocations from '../../api/fetchDangerLocations';
 
 const MainPage = (): JSX.Element => {
   const totalNumberOfCells = NUMBER_OF_ROWS * NUMBER_OF_COLUMNS;
-  const [dangerZone, setdangerZone]
-    = useState<number[]>(createDangerZone(
-      getRandomCell(totalNumberOfCells),
-      NUMBER_OF_ROWS,
-      NUMBER_OF_COLUMNS,
-    ));
-  const [startingPointIndex, setStartingPointIndex]
-    = useState(getRandomCell(totalNumberOfCells, dangerZone));
+  const [dangerLocations, setDangerLocations] = useState<number[]>([]);
+  const [dangerZone, setdangerZone] = useState<number[]>([]);
+  const [startingPointIndex, setStartingPointIndex] = useState<number>(-1);
   const [destinationIndex, setDestinationIndex] = useState(-1);
   const [openIndices, setOpenIndices] = useState<number[]>([]);
   const [closedIndices, setClosedIndices] = useState<number[]>([]);
@@ -24,7 +20,34 @@ const MainPage = (): JSX.Element => {
   const [cells, setCells] = useState<JSX.Element[]>([]);
   const [isShowingDangerZone, setIsShowingDangerZone] = useState(true);
 
-  function findPathClickHandler() {
+  useEffect(() => {
+    loadDangerLocations();
+  }, []);
+
+  useEffect(() => {
+    if (!dangerLocations.length) return;
+
+    setdangerZone([
+      ...createDangerZone(
+        dangerLocations[0],
+        NUMBER_OF_ROWS,
+        NUMBER_OF_COLUMNS,
+      ),
+      ...createDangerZone(
+        dangerLocations[1],
+        NUMBER_OF_ROWS,
+        NUMBER_OF_COLUMNS,
+      ),
+    ]);
+  }, [dangerLocations]);
+
+  useEffect(() => {
+    if (!dangerZone.length) return;
+
+    setStartingPointIndex(getRandomCell(totalNumberOfCells, dangerZone));
+  }, [dangerZone]);
+
+  function findPathClickHandler(): void {
     if (destinationIndex === -1) {
       alert('Select destination.');
 
@@ -46,7 +69,7 @@ const MainPage = (): JSX.Element => {
     );
   }
 
-  function cellClickHandler(event: React.MouseEvent) {
+  function cellClickHandler(event: React.MouseEvent): void {
     const target = event.target as HTMLDivElement;
 
     const cellId = Number(target.id);
@@ -91,7 +114,7 @@ const MainPage = (): JSX.Element => {
     pathIndices,
   ]);
 
-  function setCellState(index: number) {
+  function setCellState(index: number): CellProps['state'] {
     if (index === startingPointIndex) {
       return 'startingPoint';
     }
@@ -122,28 +145,28 @@ const MainPage = (): JSX.Element => {
     return 'unvisited';
   }
 
-  function randomClickHandler() {
-    const newDangerZone = createDangerZone(
-      getRandomCell(totalNumberOfCells),
-      NUMBER_OF_ROWS,
-      NUMBER_OF_COLUMNS,
-    );
-    const newStartingPointIndex = getRandomCell(totalNumberOfCells, newDangerZone);
-
-    setdangerZone(newDangerZone);
-    setStartingPointIndex(newStartingPointIndex);
+  function randomClickHandler(): void {
+    loadDangerLocations();
     setDestinationIndex(-1);
     clearClickHandler();
   }
 
-  function dangerClickHandler() {
+  function dangerClickHandler(): void {
     setIsShowingDangerZone(!isShowingDangerZone);
   }
 
-  function clearClickHandler() {
+  function clearClickHandler(): void {
     setOpenIndices([]);
     setClosedIndices([]);
     setPathIndices([]);
+  }
+
+  async function loadDangerLocations(): Promise<void> {
+    const dangerLocations = await fetchDangerLocations();
+
+    if (!dangerLocations || !dangerLocations.length) return;
+
+    setDangerLocations(dangerLocations);
   }
 
   return (

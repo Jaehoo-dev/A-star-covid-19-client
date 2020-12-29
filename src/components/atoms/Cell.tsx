@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import StarIcon from '@material-ui/icons/Star';
 
-interface CellProps {
+export interface CellProps {
   state: 'unvisited' | 'open' | 'closed' | 'path' | 'startingPoint' | 'destination' | 'danger';
   index: number;
   numberOfRows: number;
