@@ -7,6 +7,7 @@ interface MapHeaderProps {
   onClearButtonClick: () => void;
   onFindPathClick: () => void;
   onVisualizeClick: () => void;
+  isFindingPath: boolean;
 }
 
 const MapHeader = ({
@@ -15,6 +16,7 @@ const MapHeader = ({
   onClearButtonClick,
   onFindPathClick,
   onVisualizeClick,
+  isFindingPath,
 }: MapHeaderProps): JSX.Element => {
   function historyClickHandler() {
 
@@ -42,17 +44,19 @@ const MapHeader = ({
 
   return (
     <Header>
-      <Button onClick={historyClickHandler}>History</Button>
-      <Button onClick={dangerButtonClickHandler}>Danger</Button>
-      <Button onClick={randomButtonClickHandler}>Random</Button>
-      <Button onClick={clearButtonClickHandler}>Clear</Button>
+      <Button onClick={historyClickHandler} disabled={isFindingPath}>History</Button>
+      <Button onClick={dangerButtonClickHandler} disabled={isFindingPath}>Danger</Button>
+      <Button onClick={randomButtonClickHandler} disabled={isFindingPath}>Random</Button>
+      <Button onClick={clearButtonClickHandler} disabled={isFindingPath}>Clear</Button>
       <Button
         onClick={findPathClickHandler}
         theme={specialTheme}
+        disabled={isFindingPath}
       >Find Path</Button>
       <Button
         onClick={visualizePathFinding}
         theme={specialTheme}
+        disabled={isFindingPath}
       >Visualize A*</Button>
     </Header>
   );

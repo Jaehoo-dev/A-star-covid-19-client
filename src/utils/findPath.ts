@@ -15,8 +15,10 @@ export default async function findPath(
   setOpenIndices: React.Dispatch<React.SetStateAction<number[]>>,
   setClosedIndices: React.Dispatch<React.SetStateAction<number[]>>,
   setPathIndices: React.Dispatch<React.SetStateAction<number[]>>,
+  setCurrentCellIndex: React.Dispatch<React.SetStateAction<number>>,
   isShowingDangerZone: boolean,
   isVisualizationEnabled: boolean,
+  setIsFindingPath: React.Dispatch<React.SetStateAction<boolean>>,
 ): Promise<void> {
   const map = new Map(numberOfRows, numberOfColumns);
   const startingPoint = map.getCell(startingPointIndex);
@@ -37,12 +39,22 @@ export default async function findPath(
 
   while (openCells.length) {
     currentCell = findCellWithMinFCost(openCells);
-
     openCells.splice(openCells.indexOf(currentCell), 1);
     closedCells.push(currentCell);
 
     if (isVisualizationEnabled) {
-      await visualizePathFinding(openCells, closedCells, setOpenIndices, setClosedIndices);
+      setIsFindingPath(true);
+
+      await visualizePathFinding(
+        openCells,
+        closedCells,
+        currentCell,
+        setOpenIndices,
+        setClosedIndices,
+        setCurrentCellIndex,
+      );
+
+      setIsFindingPath(false);
     }
 
     if (currentCell.index === destinationIndex) {
@@ -74,7 +86,14 @@ export default async function findPath(
         openCells.push(neighbor);
 
         if (isVisualizationEnabled) {
-          await visualizePathFinding(openCells, closedCells, setOpenIndices, setClosedIndices);
+          await visualizePathFinding(
+            openCells,
+            closedCells,
+            currentCell,
+            setOpenIndices,
+            setClosedIndices,
+            setCurrentCellIndex,
+          );
         }
       }
     });
@@ -95,5 +114,5 @@ export default async function findPath(
     currentBackTrackingCell = currentBackTrackingCell.cameFrom;
   }
 
-  visualizeResultPath(path.reverse(), setPathIndices);
+  visualizeResultPath(path.reverse(), setPathIndices, setIsFindingPath);
 }

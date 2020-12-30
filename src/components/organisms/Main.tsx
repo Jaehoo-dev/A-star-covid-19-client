@@ -9,6 +9,7 @@ interface MainProps {
   onClearButtonClick: () => void;
   onFindPathClick: () => void;
   onVisualizeClick: () => void;
+  isFindingPath: boolean;
 }
 
 const Main = ({
@@ -18,6 +19,7 @@ const Main = ({
   onClearButtonClick,
   onFindPathClick,
   onVisualizeClick,
+  isFindingPath,
 }: MainProps): JSX.Element => {
   return (
     <MainWrapper>
@@ -28,6 +30,7 @@ const Main = ({
           onClearButtonClick={onClearButtonClick}
           onFindPathClick={onFindPathClick}
           onVisualizeClick={onVisualizeClick}
+          isFindingPath={isFindingPath}
         />
         <Map cells={cells} />
       </MapWrapper>
