@@ -7,8 +7,17 @@ import getRandomCell from '../../utils/getRandomCell';
 import aggregateDangerZones from '../../utils/aggregateDangerZones';
 import findPath from '../../utils/findPath';
 import fetchDangerLocations from '../../api/fetchDangerLocations';
+import { User } from '../../interfaces';
 
-const MainPage = (): JSX.Element => {
+interface MainPageProps {
+  onAuthButtonClick: () => void;
+  currentUser: User | null;
+}
+
+const MainPage = ({
+  onAuthButtonClick,
+  currentUser,
+}: MainPageProps): JSX.Element => {
   const totalNumberOfCells = NUMBER_OF_ROWS * NUMBER_OF_COLUMNS;
   const [dangerLocations, setDangerLocations] = useState<number[]>([]);
   const [dangerZones, setdangerZones] = useState<number[]>([]);
@@ -20,6 +29,7 @@ const MainPage = (): JSX.Element => {
   const [cells, setCells] = useState<JSX.Element[]>([]);
   const [isShowingDangerZones, setIsShowingDangerZones] = useState(true);
   const [currentCellIndex, setCurrentCellIndex] = useState<number>(-1);
+  const [isFindingPath, setIsFindingPath] = useState<boolean>(false);
 
   useEffect(() => {
     loadDangerLocations();
@@ -89,9 +99,10 @@ const MainPage = (): JSX.Element => {
   }
 
   function randomClickHandler(): void {
+    clearMap();
     loadDangerLocations();
     setDestinationIndex(-1);
-    clearMap();
+    setIsShowingDangerZones(true);
   }
 
   function clearClickHandler(): void {
@@ -134,6 +145,7 @@ const MainPage = (): JSX.Element => {
       setCurrentCellIndex,
       isShowingDangerZones,
       isVisualizationEnabled,
+      setIsFindingPath,
     );
   }
 
@@ -181,7 +193,10 @@ const MainPage = (): JSX.Element => {
 
   return (
     <>
-      <MainHeader />
+      <MainHeader
+        onAuthButtonClick={onAuthButtonClick}
+        currentUser={currentUser}
+      />
       <Main
         cells={cells}
         onDangerButtonClick={dangerClickHandler}
@@ -189,6 +204,7 @@ const MainPage = (): JSX.Element => {
         onClearButtonClick={clearClickHandler}
         onFindPathClick={findPathClickHandler}
         onVisualizeClick={visualizeClickHandler}
+        isFindingPath={isFindingPath}
       />
     </>
   );

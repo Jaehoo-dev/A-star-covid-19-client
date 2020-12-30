@@ -4,12 +4,14 @@ interface ButtonProps {
   onClick: () => void;
   children: React.ReactNode;
   theme?: object;
+  disabled?: boolean;
 }
 
 const Button = ({
   onClick,
   children,
   theme = baseTheme,
+  disabled,
 }: ButtonProps): JSX.Element => {
   function clickHandler() {
     onClick();
@@ -17,7 +19,7 @@ const Button = ({
 
   return (
     <ThemeProvider theme={theme}>
-      <StyledButton onClick={clickHandler}>
+      <StyledButton onClick={clickHandler} disabled={disabled}>
         {children}
       </StyledButton>
     </ThemeProvider>
