@@ -16,7 +16,8 @@ export default async function findPath(
   setClosedIndices: React.Dispatch<React.SetStateAction<number[]>>,
   setPathIndices: React.Dispatch<React.SetStateAction<number[]>>,
   isShowingDangerZone: boolean,
-) {
+  isVisualizationEnabled: boolean,
+): Promise<void> {
   const map = new Map(numberOfRows, numberOfColumns);
   const startingPoint = map.getCell(startingPointIndex);
   const destination = map.getCell(destinationIndex);
@@ -32,6 +33,7 @@ export default async function findPath(
   const openCells = [startingPoint];
   const closedCells: Cell[] = [];
   let currentCell = startingPoint;
+  let hasFoundPath = false;
 
   while (openCells.length) {
     currentCell = findCellWithMinFCost(openCells);
@@ -39,9 +41,13 @@ export default async function findPath(
     openCells.splice(openCells.indexOf(currentCell), 1);
     closedCells.push(currentCell);
 
-    await visualizePathFinding(openCells, closedCells, setOpenIndices, setClosedIndices);
+    if (isVisualizationEnabled) {
+      await visualizePathFinding(openCells, closedCells, setOpenIndices, setClosedIndices);
+    }
 
     if (currentCell.index === destinationIndex) {
+      hasFoundPath = true;
+
       break;
     }
 
@@ -67,9 +73,17 @@ export default async function findPath(
       if (!openCells.includes(neighbor)) {
         openCells.push(neighbor);
 
-        await visualizePathFinding(openCells, closedCells, setOpenIndices, setClosedIndices);
+        if (isVisualizationEnabled) {
+          await visualizePathFinding(openCells, closedCells, setOpenIndices, setClosedIndices);
+        }
       }
     });
+  }
+
+  if (!hasFoundPath) {
+    alert('No path found');
+
+    return;
   }
 
   const path = [];

@@ -5,7 +5,7 @@ export default function createDangerZone(
   centerIndex: number,
   numberOfRows: number,
   numberOfColumns: number,
-) {
+): number[] {
   let dangerZone = [];
   const centerRow = calculateRowIndex(centerIndex, numberOfColumns);
   const centerColumn = calculateColumnIndex(centerIndex, numberOfColumns);

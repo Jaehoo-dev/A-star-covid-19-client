@@ -5,7 +5,7 @@ interface MapProps {
   cells: JSX.Element[];
 }
 
-const Map = ({ cells }: MapProps) => {
+const Map = ({ cells }: MapProps): JSX.Element => {
   return (
     <Grid>
       {cells}

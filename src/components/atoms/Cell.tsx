@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import StarIcon from '@material-ui/icons/Star';
 
-interface CellProps {
+export interface CellProps {
   state: 'unvisited' | 'open' | 'closed' | 'path' | 'startingPoint' | 'destination' | 'danger';
   index: number;
   numberOfRows: number;
@@ -13,10 +13,8 @@ interface CellProps {
 const Cell = ({
   state,
   index,
-  numberOfRows,
-  numberOfColumns,
   onClick,
-}: CellProps) => {
+}: CellProps): JSX.Element => {
   function clickHandler(event: React.MouseEvent) {
     onClick(event);
   }

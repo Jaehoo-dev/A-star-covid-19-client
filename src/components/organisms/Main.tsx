@@ -6,25 +6,28 @@ interface MainProps {
   cells: JSX.Element[],
   onDangerButtonClick: () => void;
   onRandomButtonClick: () => void;
-  onFindPathClick: () => void;
   onClearButtonClick: () => void;
+  onFindPathClick: () => void;
+  onVisualizeClick: () => void;
 }
 
 const Main = ({
   cells,
   onDangerButtonClick,
   onRandomButtonClick,
-  onFindPathClick,
   onClearButtonClick,
-}: MainProps) => {
+  onFindPathClick,
+  onVisualizeClick,
+}: MainProps): JSX.Element => {
   return (
     <MainWrapper>
       <MapWrapper>
         <MapHeader
           onDangerButtonClick={onDangerButtonClick}
           onRandomButtonClick={onRandomButtonClick}
-          onFindPathClick={onFindPathClick}
           onClearButtonClick={onClearButtonClick}
+          onFindPathClick={onFindPathClick}
+          onVisualizeClick={onVisualizeClick}
         />
         <Map cells={cells} />
       </MapWrapper>
