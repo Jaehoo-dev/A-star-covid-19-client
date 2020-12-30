@@ -4,8 +4,8 @@ export default class Map {
   cells: Cell[];
 
   constructor(
-    numberOfRows: number,
-    numberOfColumns: number,
+    readonly numberOfRows: number,
+    readonly numberOfColumns: number,
   ) {
     this.cells = Array.from({
       length: numberOfRows * numberOfColumns,

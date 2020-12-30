@@ -6,7 +6,7 @@ export default function findNeighborsByCellIndex(
   cell: Cell,
   numberOfRows: number,
   numberOfColumns: number,
-) {
+): number[] {
   let neighborsByCoordinates = [
     [cell.rowIndex - 1, cell.columnIndex],
     [cell.rowIndex, cell.columnIndex + 1],

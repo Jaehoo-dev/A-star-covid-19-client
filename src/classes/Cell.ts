@@ -1,14 +1,14 @@
 import { calculateRowIndex, calculateColumnIndex } from '../utils/calculateIndex';
 
 export default class Cell {
-  index: number;
-  rowIndex: number;
-  columnIndex: number;
-  gCost: number;
-  hCost: number;
-  fCost: number;
-  isDangerous: boolean;
-  cameFrom: Cell | null;
+  readonly index: number;
+  readonly rowIndex: number;
+  readonly columnIndex: number;
+  public gCost: number;
+  public hCost: number;
+  public fCost: number;
+  public isDangerous: boolean;
+  public cameFrom: Cell | null;
 
   constructor(
     index: number,

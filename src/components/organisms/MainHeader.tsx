@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import HomeButton from '../molecules/HomeButton';
 import LoginButton from '../molecules/LoginButton';
 
-const MainHeader = () => {
+const MainHeader = (): JSX.Element => {
   return (
     <StyledHeader>
       <HomeButton />

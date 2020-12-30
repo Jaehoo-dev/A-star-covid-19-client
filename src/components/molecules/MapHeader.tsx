@@ -4,16 +4,18 @@ import Button, { specialTheme } from '../atoms/Button';
 interface MapHeaderProps {
   onDangerButtonClick: () => void;
   onRandomButtonClick: () => void;
-  onFindPathClick: () => void;
   onClearButtonClick: () => void;
+  onFindPathClick: () => void;
+  onVisualizeClick: () => void;
 }
 
 const MapHeader = ({
   onDangerButtonClick,
   onRandomButtonClick,
-  onFindPathClick,
   onClearButtonClick,
-}: MapHeaderProps) => {
+  onFindPathClick,
+  onVisualizeClick,
+}: MapHeaderProps): JSX.Element => {
   function historyClickHandler() {
 
   }
@@ -26,12 +28,16 @@ const MapHeader = ({
     onRandomButtonClick();
   }
 
+  function clearButtonClickHandler() {
+    onClearButtonClick();
+  }
+
   function findPathClickHandler() {
     onFindPathClick();
   }
 
-  function clearButtonClickHandler() {
-    onClearButtonClick();
+  function visualizePathFinding() {
+    onVisualizeClick();
   }
 
   return (
@@ -44,6 +50,10 @@ const MapHeader = ({
         onClick={findPathClickHandler}
         theme={specialTheme}
       >Find Path</Button>
+      <Button
+        onClick={visualizePathFinding}
+        theme={specialTheme}
+      >Visualize A*</Button>
     </Header>
   );
 };

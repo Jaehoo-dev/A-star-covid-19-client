@@ -2,69 +2,40 @@ import { useState, useEffect } from 'react';
 import { NUMBER_OF_ROWS, NUMBER_OF_COLUMNS } from '../../constants/numbers';
 import MainHeader from '../organisms/MainHeader';
 import Main from '../organisms/Main';
-import Cell from '../atoms/Cell';
+import Cell, { CellProps } from '../atoms/Cell';
 import getRandomCell from '../../utils/getRandomCell';
-import createDangerZone from '../../utils/createDangerZone';
+import aggregateDangerZones from '../../utils/aggregateDangerZones';
 import findPath from '../../utils/findPath';
+import fetchDangerLocations from '../../api/fetchDangerLocations';
 
-const MainPage = () => {
+const MainPage = (): JSX.Element => {
   const totalNumberOfCells = NUMBER_OF_ROWS * NUMBER_OF_COLUMNS;
-  const [dangerZone, setdangerZone]
-    = useState<number[]>(createDangerZone(
-      getRandomCell(totalNumberOfCells),
-      NUMBER_OF_ROWS,
-      NUMBER_OF_COLUMNS,
-    ));
-  const [startingPointIndex, setStartingPointIndex]
-    = useState(getRandomCell(totalNumberOfCells, dangerZone));
+  const [dangerLocations, setDangerLocations] = useState<number[]>([]);
+  const [dangerZones, setdangerZones] = useState<number[]>([]);
+  const [startingPointIndex, setStartingPointIndex] = useState<number>(-1);
   const [destinationIndex, setDestinationIndex] = useState(-1);
   const [openIndices, setOpenIndices] = useState<number[]>([]);
   const [closedIndices, setClosedIndices] = useState<number[]>([]);
   const [pathIndices, setPathIndices] = useState<number[]>([]);
   const [cells, setCells] = useState<JSX.Element[]>([]);
-  const [isShowingDangerZone, setIsShowingDangerZone] = useState(true);
+  const [isShowingDangerZones, setIsShowingDangerZones] = useState(true);
+  const [currentCellIndex, setCurrentCellIndex] = useState<number>(-1);
 
-  function findPathClickHandler() {
-    if (destinationIndex === -1) {
-      alert('Select destination.');
+  useEffect(() => {
+    loadDangerLocations();
+  }, []);
 
-      return;
-    }
+  useEffect(() => {
+    if (!dangerLocations.length) return;
 
-    clearClickHandler();
+    setdangerZones(aggregateDangerZones(dangerLocations));
+  }, [dangerLocations]);
 
-    findPath(
-      NUMBER_OF_ROWS,
-      NUMBER_OF_COLUMNS,
-      startingPointIndex,
-      destinationIndex,
-      dangerZone,
-      setOpenIndices,
-      setClosedIndices,
-      setPathIndices,
-      isShowingDangerZone,
-    );
-  }
+  useEffect(() => {
+    if (!dangerZones.length) return;
 
-  function cellClickHandler(event: React.MouseEvent) {
-    const target = event.target as HTMLDivElement;
-
-    const cellId = Number(target.id);
-
-    if (dangerZone.includes(cellId)) {
-      alert('Cannot select danger zone as destination.');
-
-      return;
-    }
-
-    if (cellId === destinationIndex) {
-      setDestinationIndex(-1);
-
-      return;
-    }
-
-    setDestinationIndex(cellId);
-  }
+    setStartingPointIndex(getRandomCell(totalNumberOfCells, dangerZones));
+  }, [dangerZones]);
 
   useEffect(() => {
     setCells(Array.from({
@@ -82,14 +53,91 @@ const MainPage = () => {
   }, [
     startingPointIndex,
     destinationIndex,
-    dangerZone,
-    isShowingDangerZone,
+    dangerZones,
+    isShowingDangerZones,
     openIndices,
     closedIndices,
     pathIndices,
+    currentCellIndex,
   ]);
 
-  function setCellState(index: number) {
+  function cellClickHandler(event: React.MouseEvent): void {
+    const target = event.target as HTMLDivElement;
+
+    const cellId = Number(target.id);
+
+    if (dangerZones.includes(cellId)) {
+      alert('Cannot select danger zone as destination.');
+
+      return;
+    }
+
+    clearMap();
+
+    if (cellId === destinationIndex) {
+      setDestinationIndex(-1);
+
+      return;
+    }
+
+    setDestinationIndex(cellId);
+  }
+
+  function dangerClickHandler(): void {
+    clearMap();
+    setIsShowingDangerZones(!isShowingDangerZones);
+  }
+
+  function randomClickHandler(): void {
+    loadDangerLocations();
+    setDestinationIndex(-1);
+    clearMap();
+  }
+
+  function clearClickHandler(): void {
+    clearMap();
+  }
+
+  function findPathClickHandler(): void {
+    activatePathFinding(false);
+  }
+
+  function visualizeClickHandler(): void {
+    activatePathFinding(true);
+  }
+
+  function clearMap(): void {
+    setOpenIndices([]);
+    setClosedIndices([]);
+    setPathIndices([]);
+    setCurrentCellIndex(-1);
+  }
+
+  function activatePathFinding(isVisualizationEnabled: boolean): void {
+    if (destinationIndex === -1) {
+      alert('Select destination.');
+
+      return;
+    }
+
+    clearMap();
+
+    findPath(
+      NUMBER_OF_ROWS,
+      NUMBER_OF_COLUMNS,
+      startingPointIndex,
+      destinationIndex,
+      dangerZones,
+      setOpenIndices,
+      setClosedIndices,
+      setPathIndices,
+      setCurrentCellIndex,
+      isShowingDangerZones,
+      isVisualizationEnabled,
+    );
+  }
+
+  function setCellState(index: number): CellProps['state'] {
     if (index === startingPointIndex) {
       return 'startingPoint';
     }
@@ -99,13 +147,16 @@ const MainPage = () => {
     }
 
     if (
-      isShowingDangerZone
-      && dangerZone.includes(index)
+      isShowingDangerZones
+      && dangerZones.includes(index)
     ) {
       return 'danger';
     }
 
-    if (pathIndices.includes(index)) {
+    if (
+      pathIndices.includes(index)
+      || index === currentCellIndex
+    ) {
       return 'path';
     }
 
@@ -120,28 +171,12 @@ const MainPage = () => {
     return 'unvisited';
   }
 
-  function randomClickHandler() {
-    const newDangerZone = createDangerZone(
-      getRandomCell(totalNumberOfCells),
-      NUMBER_OF_ROWS,
-      NUMBER_OF_COLUMNS,
-    );
-    const newStartingPointIndex = getRandomCell(totalNumberOfCells, newDangerZone);
+  async function loadDangerLocations(): Promise<void> {
+    const dangerLocations = await fetchDangerLocations();
 
-    setdangerZone(newDangerZone);
-    setStartingPointIndex(newStartingPointIndex);
-    setDestinationIndex(-1);
-    clearClickHandler();
-  }
+    if (!dangerLocations || !dangerLocations.length) return;
 
-  function dangerClickHandler() {
-    setIsShowingDangerZone(!isShowingDangerZone);
-  }
-
-  function clearClickHandler() {
-    setOpenIndices([]);
-    setClosedIndices([]);
-    setPathIndices([]);
+    setDangerLocations(dangerLocations);
   }
 
   return (
@@ -151,8 +186,9 @@ const MainPage = () => {
         cells={cells}
         onDangerButtonClick={dangerClickHandler}
         onRandomButtonClick={randomClickHandler}
-        onFindPathClick={findPathClickHandler}
         onClearButtonClick={clearClickHandler}
+        onFindPathClick={findPathClickHandler}
+        onVisualizeClick={visualizeClickHandler}
       />
     </>
   );

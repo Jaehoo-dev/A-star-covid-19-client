@@ -1,6 +1,6 @@
 import MainPage from './components/pages/MainPage';
 
-const App = () => {
+const App = (): JSX.Element => {
   return (
     <MainPage />
   );
