@@ -1,12 +1,24 @@
 import styled from 'styled-components';
 import HomeButton from '../molecules/HomeButton';
-import LoginButton from '../molecules/LoginButton';
+import AuthButton from '../molecules/AuthButton';
+import { User } from '../../interfaces';
 
-const MainHeader = (): JSX.Element => {
+interface MainHeaderProps {
+  onAuthButtonClick: () => void;
+  currentUser: User | null;
+}
+
+const MainHeader = ({
+  onAuthButtonClick,
+  currentUser,
+}: MainHeaderProps): JSX.Element => {
   return (
     <StyledHeader>
       <HomeButton />
-      <LoginButton />
+      <AuthButton
+        onClick={onAuthButtonClick}
+        currentUser={currentUser}
+      />
     </StyledHeader>
   );
 };
