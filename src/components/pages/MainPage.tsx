@@ -19,6 +19,7 @@ const MainPage = (): JSX.Element => {
   const [pathIndices, setPathIndices] = useState<number[]>([]);
   const [cells, setCells] = useState<JSX.Element[]>([]);
   const [isShowingDangerZones, setIsShowingDangerZones] = useState(true);
+  const [currentCellIndex, setCurrentCellIndex] = useState<number>(-1);
 
   useEffect(() => {
     loadDangerLocations();
@@ -57,6 +58,7 @@ const MainPage = (): JSX.Element => {
     openIndices,
     closedIndices,
     pathIndices,
+    currentCellIndex,
   ]);
 
   function cellClickHandler(event: React.MouseEvent): void {
@@ -70,7 +72,7 @@ const MainPage = (): JSX.Element => {
       return;
     }
 
-    clearClickHandler();
+    clearMap();
 
     if (cellId === destinationIndex) {
       setDestinationIndex(-1);
@@ -82,19 +84,18 @@ const MainPage = (): JSX.Element => {
   }
 
   function dangerClickHandler(): void {
+    clearMap();
     setIsShowingDangerZones(!isShowingDangerZones);
   }
 
   function randomClickHandler(): void {
     loadDangerLocations();
     setDestinationIndex(-1);
-    clearClickHandler();
+    clearMap();
   }
 
   function clearClickHandler(): void {
-    setOpenIndices([]);
-    setClosedIndices([]);
-    setPathIndices([]);
+    clearMap();
   }
 
   function findPathClickHandler(): void {
@@ -105,6 +106,13 @@ const MainPage = (): JSX.Element => {
     activatePathFinding(true);
   }
 
+  function clearMap(): void {
+    setOpenIndices([]);
+    setClosedIndices([]);
+    setPathIndices([]);
+    setCurrentCellIndex(-1);
+  }
+
   function activatePathFinding(isVisualizationEnabled: boolean): void {
     if (destinationIndex === -1) {
       alert('Select destination.');
@@ -112,7 +120,7 @@ const MainPage = (): JSX.Element => {
       return;
     }
 
-    clearClickHandler();
+    clearMap();
 
     findPath(
       NUMBER_OF_ROWS,
@@ -123,6 +131,7 @@ const MainPage = (): JSX.Element => {
       setOpenIndices,
       setClosedIndices,
       setPathIndices,
+      setCurrentCellIndex,
       isShowingDangerZones,
       isVisualizationEnabled,
     );
@@ -144,7 +153,10 @@ const MainPage = (): JSX.Element => {
       return 'danger';
     }
 
-    if (pathIndices.includes(index)) {
+    if (
+      pathIndices.includes(index)
+      || index === currentCellIndex
+    ) {
       return 'path';
     }
 
