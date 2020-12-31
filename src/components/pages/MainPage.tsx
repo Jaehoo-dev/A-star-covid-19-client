@@ -143,7 +143,7 @@ const MainPage = ({
         || dangerZones.includes(destinationIndex)
       )
     ) {
-      alert('No path found. Turn danger zone off');
+      alert('No path found. Turn danger zone off or select different locations.');
       return false;
     }
 
