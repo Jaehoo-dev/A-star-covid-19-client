@@ -18,7 +18,7 @@ export default async function findPath(
   setCurrentCellIndex: React.Dispatch<React.SetStateAction<number>>,
   isShowingDangerZone: boolean,
   isVisualizationEnabled: boolean,
-  setIsFindingPath: React.Dispatch<React.SetStateAction<boolean>>,
+  setIsVisualizing: React.Dispatch<React.SetStateAction<boolean>>,
 ): Promise<void> {
   const map = new Map(numberOfRows, numberOfColumns);
   const startingPoint = map.getCell(startingPointIndex);
@@ -43,7 +43,7 @@ export default async function findPath(
     closedCells.push(currentCell);
 
     if (isVisualizationEnabled) {
-      setIsFindingPath(true);
+      setIsVisualizing(true);
 
       await visualizePathFinding(
         openCells,
@@ -54,7 +54,7 @@ export default async function findPath(
         setCurrentCellIndex,
       );
 
-      setIsFindingPath(false);
+      setIsVisualizing(false);
     }
 
     if (currentCell.index === destinationIndex) {
@@ -114,5 +114,5 @@ export default async function findPath(
     currentBackTrackingCell = currentBackTrackingCell.cameFrom;
   }
 
-  visualizeResultPath(path.reverse(), setPathIndices, setIsFindingPath);
+  visualizeResultPath(path.reverse(), setPathIndices, setIsVisualizing);
 }
