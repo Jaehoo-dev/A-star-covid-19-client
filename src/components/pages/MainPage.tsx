@@ -73,6 +73,8 @@ const MainPage = ({
   ]);
 
   function cellClickHandler(event: React.MouseEvent): void {
+    if (isVisualizing) return;
+
     const target = event.currentTarget as HTMLDivElement;
     const cellId = Number(target.id);
 
