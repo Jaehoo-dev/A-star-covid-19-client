@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import StarIcon from '@material-ui/icons/Star';
+import { COLORS } from '../../constants';
 
 export interface CellProps {
   state: 'unvisited' | 'open' | 'closed' | 'path' | 'startingPoint' | 'destination' | 'danger';
@@ -38,15 +39,15 @@ const StyledCell = styled.div<{
   background-color: ${({ state }) => {
     switch (state) {
       case 'unvisited':
-        return 'white';
+        return COLORS.WHITE;
       case 'open':
-        return '#0010e9';
+        return COLORS.BLUE;
       case 'closed':
-        return '#e3e3e3';
+        return COLORS.LIGHT_GRAY;
       case 'path':
-        return '#fbff00';
+        return COLORS.YELLOW;
       case 'danger':
-        return 'red';
+        return COLORS.RED;
       default:
         return;
     }
