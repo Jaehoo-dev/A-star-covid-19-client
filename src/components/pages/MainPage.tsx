@@ -8,6 +8,8 @@ import aggregateDangerZones from '../../utils/aggregateDangerZones';
 import findPath from '../../utils/findPath';
 import fetchDangerLocations from '../../api/fetchDangerLocations';
 import { User } from '../../interfaces';
+import HistoryModal from '../molecules/HistoryModal';
+import sendPathFindingCoordinates from '../../api/sendPathFindingCoordinates';
 
 interface MainPageProps {
   onAuthButtonClick: () => void;
@@ -29,7 +31,8 @@ const MainPage = ({
   const [cells, setCells] = useState<JSX.Element[]>([]);
   const [isShowingDangerZones, setIsShowingDangerZones] = useState(true);
   const [currentCellIndex, setCurrentCellIndex] = useState<number>(-1);
-  const [isFindingPath, setIsFindingPath] = useState<boolean>(false);
+  const [isVisualizing, setIsVisualizing] = useState<boolean>(false);
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     loadDangerLocations();
@@ -72,13 +75,17 @@ const MainPage = ({
   ]);
 
   function cellClickHandler(event: React.MouseEvent): void {
-    const target = event.target as HTMLDivElement;
+    const target = event.currentTarget as HTMLDivElement;
 
     const cellId = Number(target.id);
 
-    if (dangerZones.includes(cellId)) {
+    if (isShowingDangerZones && dangerZones.includes(cellId)) {
       alert('Cannot select danger zone as destination.');
+      return;
+    }
 
+    if (cellId === startingPointIndex) {
+      alert('Cannot selet starting point as destination.');
       return;
     }
 
@@ -86,11 +93,14 @@ const MainPage = ({
 
     if (cellId === destinationIndex) {
       setDestinationIndex(-1);
-
       return;
     }
 
     setDestinationIndex(cellId);
+  }
+
+  function historyClickHandler(): void {
+    setIsHistoryModalOpen(true);
   }
 
   function dangerClickHandler(): void {
@@ -102,7 +112,6 @@ const MainPage = ({
     clearMap();
     loadDangerLocations();
     setDestinationIndex(-1);
-    setIsShowingDangerZones(true);
   }
 
   function clearClickHandler(): void {
@@ -110,11 +119,35 @@ const MainPage = ({
   }
 
   function findPathClickHandler(): void {
+    if (!validateCoordinates()) return;
+    sendPathFindingCoordinates(startingPointIndex, destinationIndex);
     activatePathFinding(false);
   }
 
   function visualizeClickHandler(): void {
+    if (!validateCoordinates()) return;
+    sendPathFindingCoordinates(startingPointIndex, destinationIndex);
     activatePathFinding(true);
+  }
+
+  function validateCoordinates(): boolean {
+    if (destinationIndex === -1) {
+      alert('Select destination.');
+      return false;
+    }
+
+    if (
+      isShowingDangerZones
+      && (
+        dangerZones.includes(startingPointIndex)
+        || dangerZones.includes(destinationIndex)
+      )
+    ) {
+      alert('No path found. Turn danger zone off or select different locations.');
+      return false;
+    }
+
+    return true;
   }
 
   function clearMap(): void {
@@ -125,14 +158,7 @@ const MainPage = ({
   }
 
   function activatePathFinding(isVisualizationEnabled: boolean): void {
-    if (destinationIndex === -1) {
-      alert('Select destination.');
-
-      return;
-    }
-
     clearMap();
-
     findPath(
       NUMBER_OF_ROWS,
       NUMBER_OF_COLUMNS,
@@ -145,41 +171,17 @@ const MainPage = ({
       setCurrentCellIndex,
       isShowingDangerZones,
       isVisualizationEnabled,
-      setIsFindingPath,
+      setIsVisualizing,
     );
   }
 
   function setCellState(index: number): CellProps['state'] {
-    if (index === startingPointIndex) {
-      return 'startingPoint';
-    }
-
-    if (index === destinationIndex) {
-      return 'destination';
-    }
-
-    if (
-      isShowingDangerZones
-      && dangerZones.includes(index)
-    ) {
-      return 'danger';
-    }
-
-    if (
-      pathIndices.includes(index)
-      || index === currentCellIndex
-    ) {
-      return 'path';
-    }
-
-    if (openIndices.includes(index)) {
-      return 'open';
-    }
-
-    if (closedIndices.includes(index)) {
-      return 'closed';
-    }
-
+    if (index === startingPointIndex) return 'startingPoint';
+    if (index === destinationIndex) return 'destination';
+    if (isShowingDangerZones && dangerZones.includes(index)) return 'danger';
+    if (pathIndices.includes(index) || index === currentCellIndex) return 'path';
+    if (openIndices.includes(index)) return 'open';
+    if (closedIndices.includes(index)) return 'closed';
     return 'unvisited';
   }
 
@@ -199,13 +201,26 @@ const MainPage = ({
       />
       <Main
         cells={cells}
+        onHistoryButtonClick={historyClickHandler}
         onDangerButtonClick={dangerClickHandler}
         onRandomButtonClick={randomClickHandler}
         onClearButtonClick={clearClickHandler}
         onFindPathClick={findPathClickHandler}
         onVisualizeClick={visualizeClickHandler}
-        isFindingPath={isFindingPath}
+        isVisualizing={isVisualizing}
+        currentUser={currentUser}
+        isShowingDangerZones={isShowingDangerZones}
       />
+      {
+        isHistoryModalOpen
+        && <HistoryModal
+          onOverlayClick={() => setIsHistoryModalOpen(false)}
+          numberOfColumns={NUMBER_OF_COLUMNS}
+          setStartingPointIndex={setStartingPointIndex}
+          setDestinationIndex={setDestinationIndex}
+          clearMap={clearMap}
+        />
+      }
     </>
   );
 };
