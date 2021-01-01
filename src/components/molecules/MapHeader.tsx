@@ -7,8 +7,7 @@ interface MapHeaderProps {
   onDangerButtonClick: () => void;
   onRandomButtonClick: () => void;
   onClearButtonClick: () => void;
-  onFindPathClick: () => void;
-  onVisualizeClick: () => void;
+  onRunPathfindingClick: (isProcessVisualizationEnabled: boolean) => void;
   isVisualizing: boolean;
   currentUser: User | null;
   isShowingDangerZones: boolean;
@@ -19,8 +18,7 @@ const MapHeader = ({
   onDangerButtonClick,
   onRandomButtonClick,
   onClearButtonClick,
-  onFindPathClick,
-  onVisualizeClick,
+  onRunPathfindingClick,
   isVisualizing,
   currentUser,
   isShowingDangerZones,
@@ -42,11 +40,11 @@ const MapHeader = ({
   }
 
   function findPathClickHandler() {
-    onFindPathClick();
+    onRunPathfindingClick(false);
   }
 
   function visualizePathFinding() {
-    onVisualizeClick();
+    onRunPathfindingClick(true);
   }
 
   return (

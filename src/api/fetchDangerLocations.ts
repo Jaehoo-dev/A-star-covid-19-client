@@ -10,7 +10,6 @@ export default async function fetchDangerLocations(): Promise<number[] | undefin
 
   if (response.result !== 'ok') {
     alert('Failed to fetch danger zone.');
-
     return;
   }
 
