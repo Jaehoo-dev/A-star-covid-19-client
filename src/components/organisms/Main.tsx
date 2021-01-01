@@ -1,36 +1,46 @@
 import styled from 'styled-components';
 import MapHeader from '../molecules/MapHeader';
 import Map from '../molecules/Map';
+import { User } from '../../interfaces';
 
 interface MainProps {
   cells: JSX.Element[],
+  onHistoryButtonClick: () => void;
   onDangerButtonClick: () => void;
   onRandomButtonClick: () => void;
   onClearButtonClick: () => void;
   onFindPathClick: () => void;
   onVisualizeClick: () => void;
-  isFindingPath: boolean;
+  isVisualizing: boolean;
+  currentUser: User | null;
+  isShowingDangerZones: boolean;
 }
 
 const Main = ({
   cells,
+  onHistoryButtonClick,
   onDangerButtonClick,
   onRandomButtonClick,
   onClearButtonClick,
   onFindPathClick,
   onVisualizeClick,
-  isFindingPath,
+  isVisualizing,
+  currentUser,
+  isShowingDangerZones,
 }: MainProps): JSX.Element => {
   return (
     <MainWrapper>
       <MapWrapper>
         <MapHeader
+          onHistoryButtonClick={onHistoryButtonClick}
           onDangerButtonClick={onDangerButtonClick}
           onRandomButtonClick={onRandomButtonClick}
           onClearButtonClick={onClearButtonClick}
           onFindPathClick={onFindPathClick}
           onVisualizeClick={onVisualizeClick}
-          isFindingPath={isFindingPath}
+          isVisualizing={isVisualizing}
+          currentUser={currentUser}
+          isShowingDangerZones={isShowingDangerZones}
         />
         <Map cells={cells} />
       </MapWrapper>

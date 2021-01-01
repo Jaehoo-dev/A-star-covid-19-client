@@ -1,25 +1,32 @@
 import styled from 'styled-components';
-import Button, { specialTheme } from '../atoms/Button';
+import Button, { specialTheme, dangerTheme } from '../atoms/Button';
+import { User } from '../../interfaces';
 
 interface MapHeaderProps {
+  onHistoryButtonClick: () => void;
   onDangerButtonClick: () => void;
   onRandomButtonClick: () => void;
   onClearButtonClick: () => void;
   onFindPathClick: () => void;
   onVisualizeClick: () => void;
-  isFindingPath: boolean;
+  isVisualizing: boolean;
+  currentUser: User | null;
+  isShowingDangerZones: boolean;
 }
 
 const MapHeader = ({
+  onHistoryButtonClick,
   onDangerButtonClick,
   onRandomButtonClick,
   onClearButtonClick,
   onFindPathClick,
   onVisualizeClick,
-  isFindingPath,
+  isVisualizing,
+  currentUser,
+  isShowingDangerZones,
 }: MapHeaderProps): JSX.Element => {
   function historyClickHandler() {
-
+    onHistoryButtonClick();
   }
 
   function dangerButtonClickHandler() {
@@ -44,19 +51,32 @@ const MapHeader = ({
 
   return (
     <Header>
-      <Button onClick={historyClickHandler} disabled={isFindingPath}>History</Button>
-      <Button onClick={dangerButtonClickHandler} disabled={isFindingPath}>Danger</Button>
-      <Button onClick={randomButtonClickHandler} disabled={isFindingPath}>Random</Button>
-      <Button onClick={clearButtonClickHandler} disabled={isFindingPath}>Clear</Button>
+      <Button
+        onClick={historyClickHandler}
+        disabled={!currentUser || isVisualizing}
+      >History</Button>
+      <Button
+        onClick={dangerButtonClickHandler}
+        disabled={isVisualizing}
+        theme={dangerTheme}
+      >{isShowingDangerZones ? 'On' : 'Off'}</Button>
+      <Button
+        onClick={randomButtonClickHandler}
+        disabled={isVisualizing}
+      >Random</Button>
+      <Button
+        onClick={clearButtonClickHandler}
+        disabled={isVisualizing}
+      >Clear</Button>
       <Button
         onClick={findPathClickHandler}
+        disabled={isVisualizing}
         theme={specialTheme}
-        disabled={isFindingPath}
       >Find Path</Button>
       <Button
         onClick={visualizePathFinding}
+        disabled={isVisualizing}
         theme={specialTheme}
-        disabled={isFindingPath}
       >Visualize A*</Button>
     </Header>
   );

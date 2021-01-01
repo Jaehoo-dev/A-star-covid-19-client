@@ -1,6 +1,6 @@
+import { auth, provider } from './config/firebase';
 import { useState, useEffect } from 'react';
 import MainPage from './components/pages/MainPage';
-import { auth, provider } from './config/firebase';
 import requestLogin from './api/requestLogin';
 import fetchCurrentUser from './api/fetchCurrentUser';
 import { User } from './interfaces';

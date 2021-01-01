@@ -2,7 +2,7 @@ import styled, { ThemeProvider } from 'styled-components';
 
 interface ButtonProps {
   onClick: () => void;
-  children: React.ReactNode;
+  children: React.ReactNode | string;
   theme?: object;
   disabled?: boolean;
 }
@@ -12,6 +12,7 @@ const Button = ({
   children,
   theme = baseTheme,
   disabled,
+  ...attributes
 }: ButtonProps): JSX.Element => {
   function clickHandler() {
     onClick();
@@ -19,7 +20,11 @@ const Button = ({
 
   return (
     <ThemeProvider theme={theme}>
-      <StyledButton onClick={clickHandler} disabled={disabled}>
+      <StyledButton
+        onClick={clickHandler}
+        disabled={disabled}
+        {...attributes}
+      >
         {children}
       </StyledButton>
     </ThemeProvider>
@@ -72,6 +77,14 @@ export const specialTheme = {
   padding: '7px 10px',
   fontSize: '18px',
   fontWeight: 'bold',
+};
+
+export const dangerTheme = {
+  border: '1px solid',
+  borderRadius: '5px',
+  backgroundColor: 'red',
+  padding: '7px 10px',
+  fontSize: '16px',
 };
 
 export const textTheme = {
