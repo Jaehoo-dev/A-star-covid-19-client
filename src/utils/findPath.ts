@@ -37,14 +37,13 @@ export default async function findPath(
   let currentCell = startingPoint;
   let hasFoundPath = false;
 
+  setIsVisualizing(true);
   while (openCells.length) {
     currentCell = findCellWithMinFCost(openCells);
     openCells.splice(openCells.indexOf(currentCell), 1);
     closedCells.push(currentCell);
 
     if (isVisualizationEnabled) {
-      setIsVisualizing(true);
-
       await visualizePathFinding(
         openCells,
         closedCells,
@@ -53,8 +52,6 @@ export default async function findPath(
         setClosedIndices,
         setCurrentCellIndex,
       );
-
-      setIsVisualizing(false);
     }
 
     if (currentCell.index === destinationIndex) {
@@ -66,12 +63,14 @@ export default async function findPath(
       = findNeighborsByCellIndex(currentCell, numberOfRows, numberOfColumns)
         .map(cellIndex => map.getCell(cellIndex));
 
-    neighbors.forEach(async neighbor => {
+    for (let i = 0; i < neighbors.length; i++) {
+      const neighbor = neighbors[i];
+
       if (
         (isShowingDangerZone && neighbor.isDangerous)
         || closedCells.includes(neighbor)
       ) {
-        return;
+        continue;
       }
 
       if (currentCell.gCost + 1 < neighbor.gCost) {
@@ -95,10 +94,11 @@ export default async function findPath(
           );
         }
       }
-    });
+    }
   }
 
   if (!hasFoundPath) {
+    setIsVisualizing(false);
     alert('No path found');
     return;
   }
@@ -108,9 +108,9 @@ export default async function findPath(
 
   while (currentBackTrackingCell.cameFrom) {
     path.push(currentBackTrackingCell);
-
     currentBackTrackingCell = currentBackTrackingCell.cameFrom;
   }
 
-  visualizeResultPath(path.reverse(), setPathIndices, setIsVisualizing);
+  await visualizeResultPath(path.reverse(), setPathIndices);
+  setIsVisualizing(false);
 }
