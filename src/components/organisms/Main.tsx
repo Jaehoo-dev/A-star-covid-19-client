@@ -9,8 +9,7 @@ interface MainProps {
   onDangerButtonClick: () => void;
   onRandomButtonClick: () => void;
   onClearButtonClick: () => void;
-  onFindPathClick: () => void;
-  onVisualizeClick: () => void;
+  onRunPathfindingClick: (isProcessVisualizationEnabled: boolean) => void;
   isVisualizing: boolean;
   currentUser: User | null;
   isShowingDangerZones: boolean;
@@ -22,8 +21,7 @@ const Main = ({
   onDangerButtonClick,
   onRandomButtonClick,
   onClearButtonClick,
-  onFindPathClick,
-  onVisualizeClick,
+  onRunPathfindingClick,
   isVisualizing,
   currentUser,
   isShowingDangerZones,
@@ -36,8 +34,7 @@ const Main = ({
           onDangerButtonClick={onDangerButtonClick}
           onRandomButtonClick={onRandomButtonClick}
           onClearButtonClick={onClearButtonClick}
-          onFindPathClick={onFindPathClick}
-          onVisualizeClick={onVisualizeClick}
+          onRunPathfindingClick={onRunPathfindingClick}
           isVisualizing={isVisualizing}
           currentUser={currentUser}
           isShowingDangerZones={isShowingDangerZones}
