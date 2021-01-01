@@ -12,6 +12,7 @@ interface HistoryModalProps {
   numberOfColumns: number;
   setStartingPointIndex: React.Dispatch<React.SetStateAction<number>>;
   setDestinationIndex: React.Dispatch<React.SetStateAction<number>>;
+  clearMap: () => void;
 }
 
 const HistoryModal = ({
@@ -19,6 +20,7 @@ const HistoryModal = ({
   numberOfColumns,
   setStartingPointIndex,
   setDestinationIndex,
+  clearMap,
 }: HistoryModalProps): JSX.Element => {
   const [historiesByIndex, setHistoriesByIndex] = useState<History[]>([]);
 
@@ -42,10 +44,11 @@ const HistoryModal = ({
   }
 
   function historyItemClickHandler(event: React.MouseEvent) {
-    closeModal();
+    clearMap();
     const [startingPointIndex, destinationIndex] = JSON.parse(event.currentTarget.id);
     setStartingPointIndex(startingPointIndex);
     setDestinationIndex(destinationIndex);
+    closeModal();
   }
 
   return (

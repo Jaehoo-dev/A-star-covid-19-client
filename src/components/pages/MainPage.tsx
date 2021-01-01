@@ -218,6 +218,7 @@ const MainPage = ({
           numberOfColumns={NUMBER_OF_COLUMNS}
           setStartingPointIndex={setStartingPointIndex}
           setDestinationIndex={setDestinationIndex}
+          clearMap={clearMap}
         />
       }
     </>
