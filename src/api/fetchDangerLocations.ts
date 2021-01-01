@@ -1,6 +1,8 @@
+import { FETCH_METHODS, RESPONSE_RESULTS } from '../constants/';
+
 export default async function fetchDangerLocations(): Promise<number[] | undefined> {
-  const res = await fetch('http://localhost:8080/dangers', {
-    method: 'GET',
+  const res = await fetch(`${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/dangers`, {
+    method: FETCH_METHODS.GET,
     headers: {
       'Content-Type': 'application/json',
     },
@@ -8,7 +10,7 @@ export default async function fetchDangerLocations(): Promise<number[] | undefin
 
   const response = await res.json();
 
-  if (response.result !== 'ok') {
+  if (response.result !== RESPONSE_RESULTS.OK) {
     alert('Failed to fetch danger zone.');
     return;
   }

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { NUMBER_OF_ROWS, NUMBER_OF_COLUMNS } from '../../constants/numbers';
+import { NUMBERS } from '../../constants';
 
 interface MapProps {
   cells: JSX.Element[];
@@ -17,8 +17,8 @@ const Grid = styled.div`
   height: 580px;
   margin: 0 auto;
   display: grid;
-  grid-template-rows: repeat(${NUMBER_OF_ROWS}, 1fr);
-  grid-template-columns: repeat(${NUMBER_OF_COLUMNS}, 1fr);
+  grid-template-rows: repeat(${NUMBERS.ROWS}, 1fr);
+  grid-template-columns: repeat(${NUMBERS.COLUMNS}, 1fr);
   grid-gap: 3px;
   padding: 3px;
 `;

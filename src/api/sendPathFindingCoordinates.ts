@@ -1,9 +1,11 @@
+import { FETCH_METHODS, RESPONSE_RESULTS } from '../constants/';
+
 export default async function sendPathFindingCoordinates(
   startingPoint: number,
   destination: number,
 ): Promise<void> {
-  const res = await fetch('http://localhost:8080/histories/new', {
-    method: 'POST',
+  const res = await fetch(`${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/histories/new`, {
+    method: FETCH_METHODS.POST,
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('astar-covid19-auth-token')}`,
@@ -16,7 +18,7 @@ export default async function sendPathFindingCoordinates(
 
   const response = await res.json();
 
-  if (response.result !== 'ok') {
+  if (response.result !== RESPONSE_RESULTS.OK) {
     alert('Failed pathfinding history update');
   }
 }
