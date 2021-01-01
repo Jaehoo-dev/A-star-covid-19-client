@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NUMBER_OF_ROWS, NUMBER_OF_COLUMNS } from '../../constants/numbers';
+import { NUMBERS } from '../../constants';
 import MainHeader from '../organisms/MainHeader';
 import Main from '../organisms/Main';
 import Cell, { CellProps } from '../atoms/Cell';
@@ -20,7 +20,7 @@ const MainPage = ({
   onAuthButtonClick,
   currentUser,
 }: MainPageProps): JSX.Element => {
-  const totalNumberOfCells = NUMBER_OF_ROWS * NUMBER_OF_COLUMNS;
+  const totalNumberOfCells = NUMBERS.ROWS * NUMBERS.COLUMNS;
   const [dangerLocations, setDangerLocations] = useState<number[]>([]);
   const [dangerZones, setdangerZones] = useState<number[]>([]);
   const [startingPointIndex, setStartingPointIndex] = useState<number>(-1);
@@ -56,8 +56,8 @@ const MainPage = ({
         key={i}
         state={setCellState(i)}
         index={i}
-        numberOfRows={NUMBER_OF_ROWS}
-        numberOfColumns={NUMBER_OF_COLUMNS}
+        numberOfRows={NUMBERS.ROWS}
+        numberOfColumns={NUMBERS.COLUMNS}
         onClick={(event: React.MouseEvent) => cellClickHandler(event)}
       />
     )));
@@ -73,6 +73,8 @@ const MainPage = ({
   ]);
 
   function cellClickHandler(event: React.MouseEvent): void {
+    if (isVisualizing) return;
+
     const target = event.currentTarget as HTMLDivElement;
     const cellId = Number(target.id);
 
@@ -153,8 +155,8 @@ const MainPage = ({
   function activatePathFinding(isProcessVisualizationEnabled: boolean): void {
     clearMap();
     findPath(
-      NUMBER_OF_ROWS,
-      NUMBER_OF_COLUMNS,
+      NUMBERS.ROWS,
+      NUMBERS.COLUMNS,
       startingPointIndex,
       destinationIndex,
       dangerZones,
@@ -205,7 +207,7 @@ const MainPage = ({
         isHistoryModalOpen
         && <HistoryModal
           onOverlayClick={() => setIsHistoryModalOpen(false)}
-          numberOfColumns={NUMBER_OF_COLUMNS}
+          numberOfColumns={NUMBERS.COLUMNS}
           setStartingPointIndex={setStartingPointIndex}
           setDestinationIndex={setDestinationIndex}
           clearMap={clearMap}
