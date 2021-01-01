@@ -59,7 +59,6 @@ export default async function findPath(
 
     if (currentCell.index === destinationIndex) {
       hasFoundPath = true;
-
       break;
     }
 
@@ -101,7 +100,6 @@ export default async function findPath(
 
   if (!hasFoundPath) {
     alert('No path found');
-
     return;
   }
 

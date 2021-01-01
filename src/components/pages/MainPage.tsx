@@ -40,13 +40,11 @@ const MainPage = ({
 
   useEffect(() => {
     if (!dangerLocations.length) return;
-
     setdangerZones(aggregateDangerZones(dangerLocations));
   }, [dangerLocations]);
 
   useEffect(() => {
     if (!dangerZones.length) return;
-
     setStartingPointIndex(getRandomCell(totalNumberOfCells, dangerZones));
   }, [dangerZones]);
 
@@ -76,7 +74,6 @@ const MainPage = ({
 
   function cellClickHandler(event: React.MouseEvent): void {
     const target = event.currentTarget as HTMLDivElement;
-
     const cellId = Number(target.id);
 
     if (isShowingDangerZones && dangerZones.includes(cellId)) {
@@ -118,16 +115,12 @@ const MainPage = ({
     clearMap();
   }
 
-  function findPathClickHandler(): void {
+  function runPathfindingClickHandler(isProcessVisualizationEnabled: boolean): void {
     if (!validateCoordinates()) return;
-    sendPathFindingCoordinates(startingPointIndex, destinationIndex);
-    activatePathFinding(false);
-  }
-
-  function visualizeClickHandler(): void {
-    if (!validateCoordinates()) return;
-    sendPathFindingCoordinates(startingPointIndex, destinationIndex);
-    activatePathFinding(true);
+    if (currentUser) {
+      sendPathFindingCoordinates(startingPointIndex, destinationIndex);
+    }
+    activatePathFinding(isProcessVisualizationEnabled);
   }
 
   function validateCoordinates(): boolean {
@@ -157,7 +150,7 @@ const MainPage = ({
     setCurrentCellIndex(-1);
   }
 
-  function activatePathFinding(isVisualizationEnabled: boolean): void {
+  function activatePathFinding(isProcessVisualizationEnabled: boolean): void {
     clearMap();
     findPath(
       NUMBER_OF_ROWS,
@@ -170,7 +163,7 @@ const MainPage = ({
       setPathIndices,
       setCurrentCellIndex,
       isShowingDangerZones,
-      isVisualizationEnabled,
+      isProcessVisualizationEnabled,
       setIsVisualizing,
     );
   }
@@ -187,9 +180,7 @@ const MainPage = ({
 
   async function loadDangerLocations(): Promise<void> {
     const dangerLocations = await fetchDangerLocations();
-
     if (!dangerLocations || !dangerLocations.length) return;
-
     setDangerLocations(dangerLocations);
   }
 
@@ -205,8 +196,7 @@ const MainPage = ({
         onDangerButtonClick={dangerClickHandler}
         onRandomButtonClick={randomClickHandler}
         onClearButtonClick={clearClickHandler}
-        onFindPathClick={findPathClickHandler}
-        onVisualizeClick={visualizeClickHandler}
+        onRunPathfindingClick={runPathfindingClickHandler}
         isVisualizing={isVisualizing}
         currentUser={currentUser}
         isShowingDangerZones={isShowingDangerZones}

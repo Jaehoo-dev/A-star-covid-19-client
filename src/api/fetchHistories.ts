@@ -13,7 +13,6 @@ export default async function fetchHistories(): Promise<History[] | undefined> {
 
   if (response.result !== 'ok') {
     alert('Failed to load histories');
-
     return;
   }
 

@@ -11,7 +11,6 @@ export default async function fetchCurrentUser(token: string) {
 
   if (response.result !== 'ok') {
     alert('Login failed.');
-
     return;
   }
 

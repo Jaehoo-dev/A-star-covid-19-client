@@ -11,9 +11,7 @@ const Overlay = ({
     onClick();
   }
 
-  return (
-    <StyledOverlay onClick={clickHandler} />
-  );
+  return <StyledOverlay onClick={clickHandler} />;
 };
 
 const StyledOverlay = styled.div`

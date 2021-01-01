@@ -20,7 +20,6 @@ const App = (): JSX.Element => {
 
       if (!user) {
         signOutUser();
-
         return;
       }
 
@@ -31,15 +30,13 @@ const App = (): JSX.Element => {
   async function authButtonClickHandler(): Promise<void> {
     if (currentUser) {
       signOutUser();
-
       return;
     }
 
     await auth.signInWithPopup(provider);
 
     if (!auth.currentUser) {
-      alert('login failed.');
-
+      alert('Login failed.');
       return;
     }
 

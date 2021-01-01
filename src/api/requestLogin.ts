@@ -11,7 +11,6 @@ export default async function requestLogin(email: string) {
 
   if (response.result !== 'ok') {
     alert('Login failed.');
-
     return;
   }
 

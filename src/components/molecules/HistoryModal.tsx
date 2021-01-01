@@ -78,9 +78,15 @@ const HistoryModal = ({
                 id={JSON.stringify(historyByIndex.coordinates)}
                 onClick={historyItemClickHandler}
               >
-                <span>{`[${startingPointCoordinates[0]}, ${startingPointCoordinates[1]}]`}</span>
-                <VerticallyCenteredSpan><ArrowRightAltIcon /></VerticallyCenteredSpan>
-                <span>{`[${destinationCoordinates[0]}, ${destinationCoordinates[1]}]`}</span>
+                <span>
+                  {`[${startingPointCoordinates[0]}, ${startingPointCoordinates[1]}]`}
+                </span>
+                <VerticallyCenteredSpan>
+                  <ArrowRightAltIcon />
+                </VerticallyCenteredSpan>
+                <span>
+                  {`[${destinationCoordinates[0]}, ${destinationCoordinates[1]}]`}
+                </span>
               </ItemWrapper>
             );
           })
