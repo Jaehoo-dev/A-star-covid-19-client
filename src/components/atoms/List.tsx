@@ -1,7 +1,7 @@
 import styled, { ThemeProvider } from 'styled-components';
 
 interface ListProps {
-  theme?: object,
+  theme: object,
   title?: string,
   children: React.ReactNode,
 }
