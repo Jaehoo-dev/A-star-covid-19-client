@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, cleanup, fireEvent, screen } from '@testing-library/react';
+import { render, cleanup, screen } from '@testing-library/react';
 import AuthButton from '../../components/molecules/AuthButton';
 import githubLogo from '../../../public/images/github.png';
 
