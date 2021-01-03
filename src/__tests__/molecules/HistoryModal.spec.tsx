@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { render, cleanup, screen, act, waitFor } from '@testing-library/react';
-import React from 'react';
 import HistoryModal from '../../components/molecules/HistoryModal';
 
 let originFetch: Response;
