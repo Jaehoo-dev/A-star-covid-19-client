@@ -1,7 +1,7 @@
 import styled, { ThemeProvider } from 'styled-components';
 
 interface ListProps {
-  theme?: object,
+  theme: object,
   title?: string,
   children: React.ReactNode,
 }
@@ -16,9 +16,7 @@ const List = ({
       <ListWrapper>
         {
           title
-          && <ListTitle>
-            {title}
-          </ListTitle>
+          && <ListTitle>{title}</ListTitle>
         }
         <ListItemsWrapper>
           {children}

@@ -1,5 +1,6 @@
 import Cell from '../classes/Cell';
 import timeGap from './timeGap';
+import { NUMBERS } from '../constants';
 
 export default async function visualizePathFinding(
   openCells: Cell[],
@@ -9,7 +10,7 @@ export default async function visualizePathFinding(
   setClosedIndices: React.Dispatch<React.SetStateAction<number[]>>,
   setCurrentCellIndex: React.Dispatch<React.SetStateAction<number>>,
 ): Promise<void> {
-  await timeGap(30);
+  await timeGap(NUMBERS.PATH_FINDING_TIME_GAP);
   setOpenIndices(openCells.map(cell => cell.index));
   setClosedIndices(closedCells.map(cell => cell.index));
   setCurrentCellIndex(currentCell.index);

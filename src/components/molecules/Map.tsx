@@ -6,11 +6,7 @@ interface MapProps {
 }
 
 const Map = ({ cells }: MapProps): JSX.Element => {
-  return (
-    <Grid>
-      {cells}
-    </Grid>
-  );
+  return <Grid>{cells}</Grid>;
 };
 
 const Grid = styled.div`
