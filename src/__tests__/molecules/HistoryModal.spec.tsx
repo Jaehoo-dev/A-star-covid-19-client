@@ -13,8 +13,6 @@ afterEach(() => {
   cleanup();
 });
 
-afterEach(cleanup);
-
 describe('<HistoryModal />', () => {
   const mockedFunction = jest.fn();
 
