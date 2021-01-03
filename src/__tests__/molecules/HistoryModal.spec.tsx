@@ -2,16 +2,7 @@ import '@testing-library/jest-dom';
 import { render, cleanup, screen, act, waitFor } from '@testing-library/react';
 import HistoryModal from '../../components/molecules/HistoryModal';
 
-let originFetch: Response;
-
-beforeEach(() => {
-  originFetch = (global as any).fetch;
-});
-
-afterEach(() => {
-  (global as any).fetch = originFetch;
-  cleanup();
-});
+afterEach(cleanup);
 
 describe('<HistoryModal />', () => {
   const mockedFunction = jest.fn();
