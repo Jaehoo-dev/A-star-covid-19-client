@@ -35,6 +35,7 @@ const HistoryModal = ({
         const bDate = new Date(b.updatedAt);
         return bDate.getTime() - aDate.getTime();
       });
+
       setHistoriesByIndex(sortedHistories);
     }
   }, []);
