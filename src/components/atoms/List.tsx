@@ -16,9 +16,7 @@ const List = ({
       <ListWrapper>
         {
           title
-          && <ListTitle>
-            {title}
-          </ListTitle>
+          && <ListTitle>{title}</ListTitle>
         }
         <ListItemsWrapper>
           {children}

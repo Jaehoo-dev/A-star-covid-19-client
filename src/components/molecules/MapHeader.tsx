@@ -52,30 +52,42 @@ const MapHeader = ({
       <Button
         onClick={historyClickHandler}
         disabled={!currentUser || isVisualizing}
-      >History</Button>
+      >
+        History
+      </Button>
       <Button
         onClick={dangerButtonClickHandler}
         disabled={isVisualizing}
         theme={dangerTheme}
-      >{isShowingDangerZones ? 'On' : 'Off'}</Button>
+      >
+        {isShowingDangerZones ? 'On' : 'Off'}
+      </Button>
       <Button
         onClick={randomButtonClickHandler}
         disabled={isVisualizing}
-      >Random</Button>
+      >
+        Random
+      </Button>
       <Button
         onClick={clearButtonClickHandler}
         disabled={isVisualizing}
-      >Clear</Button>
+      >
+        Clear
+      </Button>
       <Button
         onClick={findPathClickHandler}
         disabled={isVisualizing}
         theme={specialTheme}
-      >Find Path</Button>
+      >
+        Find Path
+      </Button>
       <Button
         onClick={visualizePathFinding}
         disabled={isVisualizing}
         theme={specialTheme}
-      >Visualize A*</Button>
+      >
+        Visualize A*
+      </Button>
     </Header>
   );
 };
