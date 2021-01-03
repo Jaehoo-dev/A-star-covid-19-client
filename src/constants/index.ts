@@ -18,4 +18,8 @@ export const COLORS = {
 export const NUMBERS = {
   ROWS: 16,
   COLUMNS: 24,
+  PATH_FINDING_TIME_GAP: 25,
+  RESULT_SHOWING_TIME_GAP: 5,
 };
+
+export const AUTH_TOKEN = 'astar-covid19-auth-token';
