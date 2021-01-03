@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, cleanup, fireEvent } from '@testing-library/react';
-import MapHeader from '../../components/molecules/MapHeader';
+import MapHeader from '../../../components/molecules/MapHeader';
 
 afterEach(cleanup);
 

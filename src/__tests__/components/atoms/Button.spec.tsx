@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, cleanup, fireEvent, screen } from '@testing-library/react';
-import Button from '../../components/atoms/Button';
+import Button from '../../../components/atoms/Button';
 
 afterEach(cleanup);
 

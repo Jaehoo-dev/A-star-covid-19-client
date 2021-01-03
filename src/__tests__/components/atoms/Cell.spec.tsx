@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, cleanup, fireEvent, queryByAttribute } from '@testing-library/react';
-import Cell from '../../components/atoms/Cell';
+import Cell from '../../../components/atoms/Cell';
 
 afterEach(cleanup);
 

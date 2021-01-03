@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, cleanup, screen, act, waitFor } from '@testing-library/react';
-import HistoryModal from '../../components/molecules/HistoryModal';
+import HistoryModal from '../../../components/molecules/HistoryModal';
 
 afterEach(cleanup);
 
