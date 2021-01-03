@@ -5,9 +5,9 @@ import githubLogo from '../../../public/images/github.png';
 
 afterEach(cleanup);
 
-const mockedFunction = jest.fn();
-
 describe('<AuthButton />', () => {
+  const mockedFunction = jest.fn();
+
   it('renders with github logo', () => {
     const { getByAltText } = render(<AuthButton onClick={mockedFunction} currentUser={null} />);
     expect(getByAltText('github')).toBeTruthy();

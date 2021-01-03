@@ -4,14 +4,14 @@ import Cell from '../../components/atoms/Cell';
 
 afterEach(cleanup);
 
-const mockedFunction = jest.fn();
-const mockedState = 'unvisited';
-const mockedIndex = 1;
-const mockedNumberOfRows = 1;
-const mockedNumberOfColumns = 1;
-const getById = queryByAttribute.bind(null, 'id');
-
 describe('<Cell />', () => {
+  const mockedFunction = jest.fn();
+  const mockedState = 'unvisited';
+  const mockedIndex = 1;
+  const mockedNumberOfRows = 1;
+  const mockedNumberOfColumns = 1;
+  const getById = queryByAttribute.bind(null, 'id');
+
   it('renders Cell component', () => {
     const { container } = render(
       <Cell

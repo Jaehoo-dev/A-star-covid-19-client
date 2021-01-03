@@ -4,9 +4,9 @@ import Button from '../../components/atoms/Button';
 
 afterEach(cleanup);
 
-const mockedFunction = jest.fn();
-
 describe('<Button />', () => {
+  const mockedFunction = jest.fn();
+
   it('renders Button component', () => {
     render(
       <Button onClick={mockedFunction}>
