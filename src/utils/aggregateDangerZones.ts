@@ -8,5 +8,5 @@ export default function aggregateDangerZones(dangerLocations: number[]) {
     dangerZones = dangerZones.concat(createDangerZone(dangerLocations[i], NUMBERS.ROWS, NUMBERS.COLUMNS));
   }
 
-  return dangerZones;
+  return [...new Set(dangerZones)];
 }
