@@ -1,15 +1,16 @@
-import { auth, provider } from './config/firebase';
+import { auth, provider } from '../config/firebase';
 import { useState, useEffect } from 'react';
-import MainPage from './components/pages/MainPage';
-import requestLogin from './api/requestLogin';
-import fetchCurrentUser from './api/fetchCurrentUser';
-import { User } from './interfaces';
+import MainPage from './pages/MainPage';
+import requestLogin from '../api/requestLogin';
+import fetchCurrentUser from '../api/fetchCurrentUser';
+import { User } from '../interfaces';
+import { AUTH_TOKEN } from '../constants';
 
 const App = (): JSX.Element => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('astar-covid19-auth-token');
+    const token = localStorage.getItem(AUTH_TOKEN);
 
     if (!token) return;
 
@@ -47,12 +48,12 @@ const App = (): JSX.Element => {
     const { user, token } = loginResponse;
 
     setCurrentUser(user);
-    localStorage.setItem('astar-covid19-auth-token', token);
+    localStorage.setItem(AUTH_TOKEN, token);
   }
 
   function signOutUser(): void {
     auth.signOut();
-    localStorage.removeItem('astar-covid19-auth-token');
+    localStorage.removeItem(AUTH_TOKEN);
     setCurrentUser(null);
   }
 

@@ -29,12 +29,15 @@ const HistoryModal = ({
 
     async function loadHistories() {
       const historiesByIndex = await fetchHistories();
+
       if (!historiesByIndex) return;
+
       const sortedHistories = historiesByIndex.sort((a, b) => {
         const aDate = new Date(a.updatedAt);
         const bDate = new Date(b.updatedAt);
         return bDate.getTime() - aDate.getTime();
       });
+
       setHistoriesByIndex(sortedHistories);
     }
   }, []);
