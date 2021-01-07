@@ -18,7 +18,7 @@ const AuthButton = ({
     <Button onClick={clickHandler}>
       <img
         className='icon'
-        src='/images/github.png'
+        src='/images/github.jpg'
         alt='github'
       />
       <span>{currentUser ? 'Logout' : 'Login'}</span>
