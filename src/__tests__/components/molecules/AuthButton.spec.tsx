@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, cleanup, screen } from '@testing-library/react';
 import AuthButton from '../../../components/molecules/AuthButton';
-import githubLogo from '../../../../public/images/github.png';
+import githubLogo from '../../../../public/images/github.jpg';
 
 afterEach(cleanup);
 
