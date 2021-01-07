@@ -5,7 +5,8 @@ export default async function fetchDangerLocations(): Promise<number[] | undefin
     = process.env.NODE_ENV === 'production'
       ? process.env.REACT_APP_DEPLOYED_SERVER
       : process.env.REACT_APP_LOCALHOST;
-
+  console.log(process.env.NODE_ENV);
+  console.log(urlRoot);
   const res = await fetch(`${urlRoot}/dangers`, {
     method: FETCH_METHODS.GET,
     headers: {
