@@ -4,7 +4,12 @@ export default async function sendPathFindingCoordinates(
   startingPoint: number,
   destination: number,
 ): Promise<void> {
-  const res = await fetch(`${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/histories/new`, {
+  const urlRoot
+    = process.env.NODE_ENV === 'production'
+      ? process.env.REACT_APP_DEPLOYED_SERVER
+      : process.env.REACT_APP_LOCALHOST;
+
+  const res = await fetch(`${urlRoot}/histories/new`, {
     method: FETCH_METHODS.POST,
     headers: {
       'Content-Type': 'application/json',
