@@ -6,7 +6,7 @@ export default async function fetchCurrentUser(token: string) {
       ? process.env.REACT_APP_DEPLOYED_SERVER
       : process.env.REACT_APP_LOCALHOST;
 
-  const res = await fetch(`${urlRoot}/users/by_token`, {
+  const res = await fetch(`${urlRoot}/users/by-token`, {
     method: FETCH_METHODS.GET,
     headers: {
       'Content-Type': 'application/json',
