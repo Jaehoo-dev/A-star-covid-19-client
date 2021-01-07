@@ -33,7 +33,7 @@ const MainPage = ({
   const [currentCellIndex, setCurrentCellIndex] = useState<number>(-1);
   const [isVisualizing, setIsVisualizing] = useState<boolean>(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState<boolean>(false);
-
+  console.log(process.env.NODE_ENV);
   useEffect(() => {
     loadDangerLocations();
   }, []);
