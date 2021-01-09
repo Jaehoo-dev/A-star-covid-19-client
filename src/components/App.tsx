@@ -51,8 +51,8 @@ const App = (): JSX.Element => {
     localStorage.setItem(AUTH_TOKEN, token);
   }
 
-  function signOutUser(): void {
-    auth.signOut();
+  async function signOutUser(): Promise<void> {
+    await auth.signOut();
     localStorage.removeItem(AUTH_TOKEN);
     setCurrentUser(null);
   }
