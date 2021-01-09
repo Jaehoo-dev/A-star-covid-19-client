@@ -1,7 +1,7 @@
 import { History } from '../interfaces/';
 import { FETCH_METHODS, RESPONSE_RESULTS } from '../constants/';
 
-export default async function fetchHistories(): Promise<History[] | undefined> {
+export default async function fetchHistories(): Promise<History[] | void> {
   const urlRoot
     = process.env.NODE_ENV === 'production'
       ? process.env.REACT_APP_DEPLOYED_SERVER
