@@ -38,6 +38,7 @@ export default async function findPath(
   let hasFoundPath = false;
 
   setIsVisualizing(true);
+
   while (openCells.length) {
     currentCell = findCellWithMinFCost(openCells);
     openCells.splice(openCells.indexOf(currentCell), 1);
