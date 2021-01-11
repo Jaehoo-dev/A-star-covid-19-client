@@ -2,6 +2,10 @@
 
 - A* 경로 탐색 알고리즘을 시각화한 웹애플리케이션입니다.
 
+### 🎬 시연 GIF
+
+![preview](/README.assets/preview.gif)
+
 ### 🗂 깃헙 저장소
 
 - [https://github.com/Jaehoo-dev/A-star-covid-19-client](https://github.com/Jaehoo-dev/A-star-covid-19-client) (프론트엔드)
