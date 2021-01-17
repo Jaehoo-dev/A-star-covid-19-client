@@ -41,6 +41,7 @@
     - root 디렉토리에 .env 파일을 만들고 환경변수를 설정합니다.
 
         ```jsx
+        npm i -D nodemon
         REACT_APP_API_KEY=<firebase api key>
         REACT_APP_AUTH_DOMAIN=<firebase auth domain>
         REACT_APP_PROJECT_ID=<firebase project id>
@@ -68,6 +69,7 @@
     - root 디렉토리에 .env 파일을 만들고 환경변수를 설정합니다.
 
         ```jsx
+        npm i -D dotenv
         JWT_SECRET_KEY=some_long_random_string_to_use_as_jsonwebtoken_secret_key
         POSTGRES_DATABASE=<postgreSQL database>
         POSTGRES_USERNAME=<postgreSQL username>
@@ -80,6 +82,7 @@
     - 서버를 실행합니다.
 
         ```jsx
+        npm i -D nodemon
         npm run dev
         ```
 
