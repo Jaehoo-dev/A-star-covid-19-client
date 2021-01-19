@@ -14,7 +14,7 @@ describe('<Main />', () => {
       <Main
         cells={Array.from({
           length: 2 * 2,
-        }, (x, i) => (
+        }, (_, i) => (
           <Cell
             key={i}
             state={'unvisited'}
@@ -50,7 +50,7 @@ describe('<Main />', () => {
       <Main
         cells={Array.from({
           length: 2 * 2,
-        }, (x, i) => (
+        }, (_, i) => (
           <Cell
             key={i}
             state={'unvisited'}
@@ -80,7 +80,7 @@ describe('<Main />', () => {
       <Main
         cells={Array.from({
           length: 2 * 2,
-        }, (x, i) => (
+        }, (_, i) => (
           <Cell
             key={i}
             state={'unvisited'}
@@ -108,7 +108,7 @@ describe('<Main />', () => {
       <Main
         cells={Array.from({
           length: 2 * 2,
-        }, (x, i) => (
+        }, (_, i) => (
           <Cell
             key={i}
             state={'unvisited'}
@@ -147,7 +147,7 @@ describe('<Main />', () => {
       <Main
         cells={Array.from({
           length: 2 * 2,
-        }, (x, i) => (
+        }, (_, i) => (
           <Cell
             key={i}
             state={'unvisited'}
@@ -177,7 +177,7 @@ describe('<Main />', () => {
       <Main
         cells={Array.from({
           length: 2 * 2,
-        }, (x, i) => (
+        }, (_, i) => (
           <Cell
             key={i}
             state={'unvisited'}

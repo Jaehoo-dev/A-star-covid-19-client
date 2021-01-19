@@ -9,7 +9,7 @@ export default class Map {
   ) {
     this.cells = Array.from({
       length: numberOfRows * numberOfColumns,
-    }, (x, i) => (new Cell(i, numberOfColumns)));
+    }, (_, i) => (new Cell(i, numberOfColumns)));
   }
 
   getCell(index: number) {
