@@ -1,6 +1,6 @@
 import { FETCH_METHODS, RESPONSE_RESULTS } from '../constants/';
 
-export default async function fetchDangerLocations(): Promise<number[] | undefined> {
+export default async function fetchDangerLocations(): Promise<number[] | void> {
   const urlRoot
     = process.env.NODE_ENV === 'production'
       ? process.env.REACT_APP_DEPLOYED_SERVER

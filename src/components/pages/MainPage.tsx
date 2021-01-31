@@ -51,7 +51,7 @@ const MainPage = ({
   useEffect(() => {
     setCells(Array.from({
       length: totalNumberOfCells,
-    }, (x, i) => (
+    }, (_, i) => (
       <Cell
         key={i}
         state={setCellState(i)}
